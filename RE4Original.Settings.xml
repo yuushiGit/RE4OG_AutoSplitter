@@ -1,0 +1,222 @@
+<Settings>
+	<Setting Id="MainGameSplits" Label="Main Game" State="true">
+		<Setting Id="MainGameChapterSplits" Label="Chapters" State="true">
+			<Setting Id="Chapter1" Label="Chapter 1-1" State="true"/>
+			<Setting Id="Chapter2" Label="Chapter 1-2" State="true"/>
+			<Setting Id="Chapter3" Label="Chapter 1-3" State="true"/>
+			<Setting Id="Chapter4" Label="Chapter 2-1" State="true"/>
+			<Setting Id="Chapter5" Label="Chapter 2-2" State="true"/>
+			<Setting Id="Chapter6" Label="Chapter 2-3" State="true"/>
+			<Setting Id="Chapter7" Label="Chapter 3-1" State="true"/>
+			<Setting Id="Chapter8" Label="Chapter 3-2" State="true"/>
+			<Setting Id="Chapter9" Label="Chapter 3-3" State="true"/>
+			<Setting Id="Chapter10" Label="Chapter 3-4" State="true"/>
+			<Setting Id="Chapter11" Label="Chapter 4-1" State="true"/>
+			<Setting Id="Chapter12" Label="Chapter 4-2" State="true"/>
+			<Setting Id="Chapter13" Label="Chapter 4-3" State="true"/>
+			<Setting Id="Chapter14" Label="Chapter 4-4" State="true"/>
+			<Setting Id="Chapter15" Label="Chapter 5-1" State="true"/>
+			<Setting Id="Chapter16" Label="Chapter 5-2" State="true"/>
+			<Setting Id="Chapter17" Label="Chapter 5-3" State="true"/>
+			<Setting Id="Chapter18" Label="Chapter 5-4" State="true"/>
+		</Setting>
+		<Setting Id="MainGameKeyItemSplits" Label="Key Items" State="false">
+			<Setting Id="MainGameC1KeyItemSplits" Label="Chapter 1" State="false">
+				<Setting Id="Item260164" Label="Emblem (Right half)" State="true"/>
+				<Setting Id="Item260165" Label="Emblem (Left half)" State="true"/>
+				<Setting Id="Item26159" Label="Insignia Key" State="true"/>
+			</Setting>
+			<Setting Id="MainGameC2KeyItemSplits" Label="Chapter 2" State="false">
+				<Setting Id="Item26860" Label="Round Insignia" State="true"/>
+				<Setting Id="Item285140" Label="Camp Key" State="true"/>
+				<Setting Id="Item286139" Label="Old Key" State="true"/>
+				<Setting Id="Item28761" Label="False Eye" State="true"/>
+			</Setting>
+			<Setting Id="MainGameC3KeyItemSplits" Label="Chapter 3" State="false">
+				<Setting Id="Item519128" Label="Golden Sword" State="true"/>
+				<Setting Id="Item519196" Label="Platinum Sword" State="true"/>
+				<Setting Id="Item515167" Label="Castle Gate Key" State="true"/>
+				<Setting Id="Item513195" Label="Prison Key" State="true"/>
+				<Setting Id="Item521163" Label="Gallery Key" State="true"/>
+				<Setting Id="Item52131" Label="Goat Ornament" State="true"/>
+				<Setting Id="Item52358" Label="Moonstone (Right half)" State="true"/>
+				<Setting Id="Item523105" Label="Moonstone (Left half)" State="true"/>
+				<Setting Id="Item52629" Label="Stone Tablet" State="true"/>
+				<Setting Id="Item52615" Label="Salazar Family Insignia" State="true"/>
+				<Setting Id="Item52657" Label="Serpent Ornament" State="true"/>
+			</Setting>
+			<Setting Id="MainGameC4KeyItemSplits" Label="Chapter 4" State="false">
+				<Setting Id="Item54630" Label="Lion Ornament" State="true"/>
+				<Setting Id="Item530111" Label="Queen's Grail" State="true"/>
+				<Setting Id="Item534110" Label="King's Grail" State="true"/>
+				<Setting Id="Item547141" Label="Dynamite" State="true"/>
+				<Setting Id="Item538123" Label="Key to the Mine" State="true"/>
+				<Setting Id="Item539130" Label="Stone of Sacrifice" State="true"/>
+			</Setting>
+			<Setting Id="MainGameC5KeyItemSplits" Label="Chapter 5" State="false">
+				<Setting Id="Item775132" Label="Freezer Card Key" State="true"/>
+				<Setting Id="Item776146" Label="Waste Disposal Card Key" State="true"/>
+				<Setting Id="Item777131" Label="Storage Room Card Key" State="true"/>
+				<Setting Id="Item796135" Label="Piece of the Holy Beast, Eagle" State="true"/>
+				<Setting Id="Item796134" Label="Piece of the Holy Beast, Serpent" State="true"/>
+				<Setting Id="Item807116" Label="Emergency Lock Card Key" State="true"/>
+				<Setting Id="Item818136" Label="Jet-ski Key" State="true"/>
+			</Setting>
+		</Setting>
+		<Setting Id="MainGameEventSplits" Label="Events" State="false">
+			<Setting Id="MainGameC1EventSplits" Label="Chapter 1" State="false">
+				<Setting Id="Event256s03" Label="Meet First Ganado" State="true"/>
+				<Setting Id="Event256s20" Label="Defeat First Ganado" State="true"/>
+				<Setting Id="Event257s00" Label="Dead Police Officer" State="true"/>
+				<Setting Id="Event257s21" Label="Enter a 2-story house" State="true"/>
+				<Setting Id="Event257s30" Label="Church's bell rings" State="true"/>
+				<Setting Id="Event262s00" Label="Meet Luis" State="true"/>
+				<Setting Id="Event260s00" Label="Ganado's QTE" State="true"/>
+				<Setting Id="Event260s01" Label="Luis escapes" State="true"/>
+				<Setting Id="Event260s10" Label="Meet Merchant" State="true"/>
+				<Setting Id="Event261s00" Label="Meet Mendez" State="true"/>
+				<Setting Id="Event258s00" Label="Meet Merchant at the cave" State="true"/>
+				<Setting Id="Event267s10" Label="Del Lago Fight" State="true"/>
+				<Setting Id="Event267s20" Label="Defeat Del Lago" State="true"/>
+				<Setting Id="Event267s22" Label="Del Lago's QTE" State="true"/>
+			</Setting>
+			<Setting Id="MainGameC2EventSplits" Label="Chapter 2" State="false">
+				<Setting Id="Event283s00" Label="Leon's Nightmare" State="true"/>
+				<Setting Id="Event281s00" Label="El Gigante Fight" State="true"/>
+				<Setting Id="Event281s20" Label="Defeat El Gigante" State="true"/>
+				<Setting Id="Event279s00" Label="Meet Ashley" State="true"/>
+				<Setting Id="Event279s10" Label="Meet Saddler" State="true"/>
+				<Setting Id="Event284s00" Label="Cabin Fight" State="true"/>
+				<Setting Id="Event284s10" Label="Cabin End" State="true"/>
+				<Setting Id="Event287s00" Label="Mendez's QTE" State="true"/>
+				<Setting Id="Event287s02" Label="Mendez Fight" State="true"/>
+				<Setting Id="Event287s10" Label="Defeat Mendez" State="true"/>
+				<Setting Id="Event287s11" Label="Obtain False Eye" State="true"/>
+				<Setting Id="Event512s00" Label="Escape from village" State="true"/>
+			</Setting>
+			<Setting Id="MainGameC3EventSplits" Label="Chapter 3" State="false">
+				<Setting Id="Event515s00" Label="Reunited with Luis" State="true"/>
+				<Setting Id="Event513s00" Label="Meet Salazar" State="true"/>
+				<Setting Id="Event516s00" Label="Ashley restrained" State="true"/>
+				<Setting Id="Event521s00" Label="Meet Salazar at the gallery" State="true"/>
+				<Setting Id="Event523s00" Label="Meet Ada" State="true"/>
+				<Setting Id="Event518s00" Label="Dead Luis" State="true"/>
+				<Setting Id="Event518s10" Label="Shoot the wall clamps" State="true"/>
+				<Setting Id="Event518s20" Label="Reunited with Ashley" State="true"/>
+			</Setting>
+			<Setting Id="MainGameC4EventSplits" Label="Chapter 4" State="false">
+				<Setting Id="Event530s00" Label="Salazar's trap" State="true"/>
+				<Setting Id="Event531s00" Label="Ashley is stolen by Novistadors" State="true"/>
+				<Setting Id="Event532s00" Label="Find Ashley with binoculars" State="true"/>
+				<Setting Id="Event533s00" Label="Fall down a trap door" State="true"/>
+				<Setting Id="Event533s01" Label="Hookshot QTE" State="true"/>
+				<Setting Id="Event545_ev" Label="Verdugo spawns" State="true"/>
+				<Setting Id="Event555s00" Label="Saddler's order" State="true"/>
+				<Setting Id="Event551s00" Label="Verdugo's QTE" State="true"/>
+				<Setting Id="Event551s01" Label="Salazar escapes" State="true"/>
+				<Setting Id="Event552s00" Label="Salazar Fight" State="true"/>
+				<Setting Id="Event554s00" Label="Escape from castle" State="true"/>
+			</Setting>
+			<Setting Id="MainGameC5EventSplits" Label="Chapter 5" State="false">
+				<Setting Id="Event768s00" Label="Enter the island" State="true"/>
+				<Setting Id="Event772s00" Label="Find Ashley" State="true"/>
+				<Setting Id="Event780s00" Label="Reunited with Ashley" State="true"/>
+				<Setting Id="Event779s00" Label="Jumping down to the waste disposal" State="true"/>
+				<Setting Id="Event790s00" Label="Meet Saddler again" State="true"/>
+				<Setting Id="Event778s00" Label="Ada and Krauser" State="true"/>
+				<Setting Id="Event791s00" Label="Krauser's QTE" State="true"/>
+				<Setting Id="Event795s00" Label="U-3 Fight" State="true"/>
+				<Setting Id="Event796s00" Label="Krauser Fight 1" State="true"/>
+				<Setting Id="Event796s02" Label="Krauser Fight 2" State="true"/>
+				<Setting Id="Event796s01" Label="Krauser Fight 3" State="true"/>
+				<Setting Id="Event800s00" Label="Meet Mike" State="true"/>
+				<Setting Id="Event801s00" Label="Dead Mike" State="true"/>
+				<Setting Id="Event805s00" Label="Leon attacks Ada" State="true"/>
+				<Setting Id="Event809s00" Label="Arrived on the laboratory" State="true"/>
+				<Setting Id="Event816s00" Label="Plaga Removal" State="true"/>
+				<Setting Id="Event817s00" Label="Take the Elevator" State="true"/>
+				<Setting Id="Event818s00" Label="Saddler Fight" State="true"/>
+				<Setting Id="Event818s20" Label="Rocket Launcher (Special)" State="true"/>
+				<Setting Id="Event817s10" Label="Escape from island" State="true"/>
+				<Setting Id="Event819s00" Label="Jetski speeds up" State="true"/>
+			</Setting>
+		</Setting>
+	</Setting>
+	<Setting Id="SeparateWaysSplits" Label="Separate Ways" State="true">
+		<Setting Id="SeparateWaysChapterSplits" Label="Chapters" State="true">
+			<Setting Id="Chapter21" Label="Chapter 1" State="true"/>
+			<Setting Id="Chapter22" Label="Chapter 2" State="true"/>
+			<Setting Id="Chapter23" Label="Chapter 3" State="true"/>
+			<Setting Id="Chapter24" Label="Chapter 4" State="true"/>
+		</Setting>
+		<Setting Id="SeparateWaysKeyItemSplits" Label="Key Items" State="false">
+			<Setting Id="SeparateWaysC1KeyItemSplits" Label="Chapter 1" State="false">
+				<Setting Id="Item128059" Label="Insignia Key" State="true"/>
+				<Setting Id="Item1282118" Label="Green Catseye" State="true"/>
+				<Setting Id="Item128260" Label="Round Insignia" State="true"/>
+			</Setting>
+			<Setting Id="SeparateWaysC2KeyItemSplits" Label="Chapter 2" State="false">
+				<Setting Id="Item1288129" Label="Iron Key" State="true"/>
+				<Setting Id="Item1291142" Label="Lift Activation Key" State="true"/>
+			</Setting>
+			<Setting Id="SeparateWaysC3KeyItemSplits" Label="Chapter 3" State="false">
+				<Setting Id="Item129327" Label="Hourglass w/ gold decor" State="true"/>
+			</Setting>
+			<Setting Id="SeparateWaysC4KeyItemSplits" Label="Chapter 4" State="false">
+				<Setting Id="Item129949" Label="Activation Key (blue)" State="true"/>
+				<Setting Id="Item129951" Label="Activation Key (red)" State="true"/>
+			</Setting>
+		</Setting>
+		<Setting Id="SeparateWaysEventSplits" Label="Events" State="false">
+			<Setting Id="SeparateWaysC1EventSplits" Label="Chapter 1" State="false">
+				<Setting Id="Event1280_ev" Label="Dr.Salvador spawns" State="true"/>
+				<Setting Id="Event1283s00" Label="Church's bell rings" State="true"/>
+			</Setting>
+			<Setting Id="SeparateWaysC2EventSplits" Label="Chapter 2" State="false">
+				<Setting Id="Event1286s00" Label="Wesker's order" State="true"/>
+				<Setting Id="Event1287s00" Label="Spots the Ganados taking Luis and Leon" State="true"/>
+				<Setting Id="Event1286s10" Label="Leon enters the chief's house" State="true"/>
+				<Setting Id="Event1286s11" Label="Saves Leon from Mendez" State="true"/>
+				<Setting Id="Event1289s00" Label="Meet Luis" State="true"/>
+			</Setting>
+			<Setting Id="SeparateWaysC3EventSplits" Label="Chapter 3" State="false">
+				<Setting Id="Event1294s00" Label="Meet Leon" State="true"/>
+				<Setting Id="Event1296s00" Label="Spots Leon fighting" State="true"/>
+				<Setting Id="Event1292s00" Label="Dead Luis" State="true"/>
+			</Setting>
+			<Setting Id="SeparateWaysC4EventSplits" Label="Chapter 4" State="false">
+				<Setting Id="Event1298s00" Label="Ada and Krauser" State="true"/>
+				<Setting Id="Event1303s01" Label="Krauser's QTE" State="true"/>
+			</Setting>
+			<Setting Id="SeparateWaysC5EventSplits" Label="Chapter 5" State="false">
+				<Setting Id="Event1304s00" Label="Enter the military area" State="true"/>
+				<Setting Id="Event1306s00" Label="Leon attacks Ada" State="true"/>
+				<Setting Id="Event1308s00" Label="Krauser Fight" State="true"/>
+				<Setting Id="Event1308s10" Label="Defeat krauser" State="true"/>
+				<Setting Id="Event1309s00" Label="Saddler Fight" State="true"/>
+				<Setting Id="Event1310s00" Label="Leon fights Saddler" State="true"/>
+			</Setting>
+		</Setting>
+	</Setting>
+	<Setting Id="AssignmentAdaSplits" Label="Assignment Ada" State="true">
+		<Setting Id="PlagaSampleSplits" Label="Plaga Samples" State="true">
+			<Setting Id="Sample1" Label="Plaga Sample 1" State="true"/>
+			<Setting Id="Sample2" Label="Plaga Sample 2" State="true"/>
+			<Setting Id="Sample3" Label="Plaga Sample 3" State="true"/>
+			<Setting Id="Sample4" Label="Plaga Sample 4" State="true"/>
+			<Setting Id="Sample5" Label="Plaga Sample 5" State="true"/>
+		</Setting>
+	</Setting>
+	<Setting Id="Infos" Label="Information" State="false">
+		<Setting Id="ShowDA" Label="DA" State="true"/>
+		<Setting Id="ShowHealth" Label="Health" State="true"/>
+		<Setting Id="ShowMoney" Label="Money" State="true"/>
+		<Setting Id="ShowHitRatio" Label="Hit Ratio" State="true"/>
+		<Setting Id="ShowKills" Label="Kills" State="true"/>
+		<Setting Id="ShowDeaths" Label="Deaths" State="true"/>
+		<Setting Id="ShowInGameTime" Label="In Game Time" State="true"/>
+		<Setting Id="ShowInventoryCount" Label="Inventory Count" State="true"/>
+		<Setting Id="ShowInventoryTime" Label="Inventory Time" State="true"/>
+	</Setting>
+	<Setting Id="DoorSplits" Label="Door Splits" State="true"/>
+</Settings>

@@ -123,17 +123,38 @@
     </CheatEntry>
     <CheatEntry>
       <ID>41</ID>
-      <Description>"isContact"</Description>
+      <Description>"isRadioCall"</Description>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>Byte</VariableType>
       <Address>bio4.exe+87AFFB</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>42</ID>
+      <Description>"isEndOfChapter"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Byte</VariableType>
+      <Address>bio4.exe+867BA1</Address>
     </CheatEntry>
     <CheatEntry>
       <ID>11</ID>
       <Description>"isSubtitle"</Description>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>Byte</VariableType>
-      <Address>bio4.exe+817840</Address>
+      <Address>bio4.exe+806F39</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>44</ID>
+      <Description>"isQTE"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Byte</VariableType>
+      <Address>bio4.exe+0x86eA58</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>43</ID>
+      <Description>"isEvent"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Byte</VariableType>
+      <Address>bio4.exe+867C0A</Address>
     </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>
