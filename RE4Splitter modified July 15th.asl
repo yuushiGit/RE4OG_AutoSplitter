@@ -1,28 +1,38 @@
 // Version 1.1.0 (Latest)
 state("bio4", "1.1.0")
 {
-    byte frameRate        : 0x82B7A0; 
-    byte screenState      : 0x85A780; 
-    byte screenTransition : 0x858F88; 
+    // Framecounter components
+    byte frameRate        : 0x82B7A0;
+    long totalFrames      : 0xCECB18; 
+
+    // Misc
     byte menuType         : 0x87AD04; 
     byte character        : 0x85F728; 
     byte chapter          : 0x85F6FA; 
     byte item             : 0x858EE4;
     short room            : 0x85A788; 
     uint igt              : 0x85F704; 
-    long totalFrames      : 0xCECB18; 
-    long sample           : 0x85F9EC; 
+    bool isEndOfChapter   : 0x867BA1;
+    bool isQTE            : 0x863A58;
+
+    // Cutscenes
     string7 movie         : 0x86CE8C; 
     string7 cutscene      : 0x803C6E; 
     bool isMovie          : 0x86CD44; 
     bool isCutscene       : 0x803C5F;
     byte isMiniCutscene   : 0x867C0D; 
-    byte isEvent          : 0x867C0A; 
+    byte eventType        : 0x867C0A;
     bool isContact        : 0x87AFFB; 
-    bool isMissionText    : 0x817840;
-    bool isEndOfChapter   : 0x867BA1;
-    bool isQTE            : 0x863A58;
 
+    // Loadings
+    byte screenState      : 0x85A780; 
+    byte screenTransition : 0x858F88; 
+
+    // Assignment Ada
+    long sample           : 0x85F9EC; 
+    bool isMissionText    : 0x817840;
+
+    // SRT variables
     byte difficulty       : 0x862BDC; 
     short da              : 0x85F6F4; 
     short health          : 0x85F714; 
@@ -36,25 +46,38 @@ state("bio4", "1.1.0")
 // Version 1.0.6 (Old)
 state("bio4", "1.0.6")
 {
+    // Framecounter components
     byte frameRate        : 0x827F38;
-    byte screenState      : 0x856F00;
-    byte screenTransition : 0x855708;
+    long totalFrames      : 0xCE9298;
+
+    // Misc
     byte menuType         : 0x877484;
     byte character        : 0x85BEA8;
     byte chapter          : 0x85BE7A;
     byte item             : 0x855664;
     short room            : 0x856F08;
     uint igt              : 0x85BE84;
-    long totalFrames      : 0xCE9298;
-    long sample           : 0x85C16C;
+    // isEndOfChapter is missing here
+    // isQTE is missing here
+
+    // Cutscenes
     string7 movie         : 0x8695FC;
     string7 cutscene      : 0x802C6E;
     bool isMovie          : 0x8694B4;
     bool isCutscene       : 0x802C5F;
     bool isMiniCutscene   : 0x86437D;
+    // eventType is missing here
     bool isContact        : 0x87777B;
+
+    // Loadings
+    byte screenState      : 0x856F00;
+    byte screenTransition : 0x855708;
+
+    // Assignment Ada
+    long sample           : 0x85C16C;
     bool isMissionText    : 0x814030;
 
+    // SRT variables
     byte difficulty       : 0x85F35C;
     short da              : 0x85BE74;
     short health          : 0x85BE94;
@@ -68,25 +91,38 @@ state("bio4", "1.0.6")
 // Version 1.0.6 (Latest in Japan)
 state("bio4", "1.0.6 (Japan)")
 {
+    // Framecounter components
     byte frameRate        : 0x827F48;
-    byte screenState      : 0x856F00;
-    byte screenTransition : 0x855708;
+    long totalFrames      : 0xCE9298;
+
+    // Misc
     byte menuType         : 0x877484;
     byte character        : 0x85BEA8;
     byte chapter          : 0x85BE7A;
     byte item             : 0x855664;
     short room            : 0x856F08;
     uint igt              : 0x85BE84;
-    long totalFrames      : 0xCE9298;
-    long sample           : 0x85C16C;
+    // isEndOfChapter is missing here
+    // isQTE is missing here
+
+    // Cutscenes
     string7 movie         : 0x8695FC;
     string7 cutscene      : 0x802C6E;
     bool isMovie          : 0x8694B4;
     bool isCutscene       : 0x802C5F;
     bool isMiniCutscene   : 0x86437D;
+    // eventType is missing here
     bool isContact        : 0x87777B;
-    bool isMissionText    : 0x814040;
 
+    // Loadings
+    byte screenState      : 0x856F00;
+    byte screenTransition : 0x855708;
+
+    // Assignment Ada
+    long sample           : 0x85C16C;
+    bool isMissionText    : 0x814040;
+    
+    // SRT variables
     byte difficulty       : 0x85F35C;
     short da              : 0x85BE74;
     short health          : 0x85BE94;
@@ -476,15 +512,15 @@ update
     bool villageTutorial = current.menuType == 64 && current.room == 257;
     bool churchTutorial = current.menuType == 64 && current.room == 279;
     bool chapter3_1EndCutscenePausing = current.room == 516 && current.isCutscene;
-    bool verdugoSplitPausing = current.isEvent == 1 && current.room == 545 && current.isMiniCutscene == 0 && !current.isEndOfChapter;
-    bool chapter4_2StartPausing = current.isEvent == 1 && current.room == 544 && current.isMiniCutscene == 0 && !current.isEndOfChapter;
-    bool chapter4_2EndPausing = current.isEvent == 1 && current.room == 541 && current.isMiniCutscene == 0 && !current.isEndOfChapter;
-    bool chapter4_3StartEndPausing = current.isEvent == 1 && current.room == 549 && current.isMiniCutscene == 0 && !current.isEndOfChapter; 
-    bool salazarStatuePausing = current.isEvent == 1 && current.room == 550 && current.isMiniCutscene == 0 && !current.isEndOfChapter; 
-    bool afterElevatorPausing = current.isEvent == 1 && current.room == 551 && current.isMiniCutscene == 0; 
-    bool chapter4_4EndPausing = current.isEvent == 1 && current.room == 554 && current.isMiniCutscene == 0 && !current.isEndOfChapter;
-    bool krauserCutscenePausing = current.isEvent == 3 && current.room == 791 && current.isMiniCutscene == 0 && !current.isQTE;
-    bool saddlerElevatorPausing = current.isEvent == 1 && current.room == 818 && current.isMiniCutscene == 0;
+    bool verdugoSplitPausing = current.eventType == 1 && current.room == 545 && current.isMiniCutscene == 0 && !current.isEndOfChapter;
+    bool chapter4_2StartPausing = current.eventType == 1 && current.room == 544 && current.isMiniCutscene == 0 && !current.isEndOfChapter;
+    bool chapter4_2EndPausing = current.eventType == 1 && current.room == 541 && current.isMiniCutscene == 0 && !current.isEndOfChapter;
+    bool chapter4_3StartEndPausing = current.eventType == 1 && current.room == 549 && current.isMiniCutscene == 0 && !current.isEndOfChapter; 
+    bool salazarStatuePausing = current.eventType == 1 && current.room == 550 && current.isMiniCutscene == 0 && !current.isEndOfChapter; 
+    bool afterElevatorPausing = current.eventType == 1 && current.room == 551 && current.isMiniCutscene == 0; 
+    bool chapter4_4EndPausing = current.eventType == 1 && current.room == 554 && current.isMiniCutscene == 0 && !current.isEndOfChapter;
+    bool krauserCutscenePausing = current.eventType == 3 && current.room == 791 && current.isMiniCutscene == 0 && !current.isQTE;
+    bool saddlerElevatorPausing = current.eventType == 1 && current.room == 818 && current.isMiniCutscene == 0;
 
 
     // Add load removal frames
