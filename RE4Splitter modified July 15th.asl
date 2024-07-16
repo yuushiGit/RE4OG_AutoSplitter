@@ -1,33 +1,36 @@
 // Version 1.1.0 (Latest)
 state("bio4", "1.1.0")
 {
-    byte frameRate        : 0x82B7A0; // FPS Settings
-    byte screenState      : 0x85A780; // Screen States
-    byte screenTransition : 0x858F88; // Screen Transition
-    byte menu             : 0x87AD04; // Menu Screens
-    byte character        : 0x85F728; // Characters
-    byte chapter          : 0x85F6FA; // Chapters
-    byte item             : 0x858EE4; // Items
-    short room            : 0x85A788; // Rooms
-    uint igt              : 0x85F704; // In Game Time
-    long totalFrames      : 0xCECB18; // Total Frames
-    long sample           : 0x85F9EC; // Plaga Samples
-    string7 movie         : 0x86CE8C; // Pre-Rendered Cutscenes in playback
-    string7 cutscene      : 0x803C6E; // Realtime Rendering Cutscenes in playback
-    bool isMovie          : 0x86CD44; // Pre-Rendered Cutscenes
-    bool isCutscene       : 0x803C5F; // Realtime Rendering Cutscenes
-    bool isMiniCutscene   : 0x867C0D; // Mini Cutscenes
-    bool isContact        : 0x87AFFB; // Contact from Hunnigan
-    bool isMissionText       : 0x817840; // Assignment Ada's initial text on screen. It's equal to 1 while the text is displayed, and 0 after it's skipped.
+    byte frameRate        : 0x82B7A0; 
+    byte screenState      : 0x85A780; 
+    byte screenTransition : 0x858F88; 
+    byte menuType         : 0x87AD04; 
+    byte character        : 0x85F728; 
+    byte chapter          : 0x85F6FA; 
+    byte item             : 0x858EE4;
+    short room            : 0x85A788; 
+    uint igt              : 0x85F704; 
+    long totalFrames      : 0xCECB18; 
+    long sample           : 0x85F9EC; 
+    string7 movie         : 0x86CE8C; 
+    string7 cutscene      : 0x803C6E; 
+    bool isMovie          : 0x86CD44; 
+    bool isCutscene       : 0x803C5F;
+    byte isMiniCutscene   : 0x867C0D; 
+    byte isEvent          : 0x867C0A; 
+    bool isContact        : 0x87AFFB; 
+    bool isMissionText    : 0x817840;
+    bool isEndOfChapter   : 0x867BA1;
+    bool isQTE            : 0x863A58;
 
-    byte difficulty       : 0x862BDC; // Difficulties
-    short da              : 0x85F6F4; // Difficulty Adjustment
-    short health          : 0x85F714; // Main Character's Health
-    short chapterKills    : 0x862BC4; // Kills in chapter
-    short totalKills      : 0x862BC8; // Kills in total
-    uint money            : 0x85F708; // How much money the player has
+    byte difficulty       : 0x862BDC; 
+    short da              : 0x85F6F4; 
+    short health          : 0x85F714; 
+    short chapterKills    : 0x862BC4; 
+    short totalKills      : 0x862BC8; 
+    uint money            : 0x85F708;
 
-    bool F10Key           : 0xE2286C, 0x4, 0x620; // F10 Key
+    bool F10Key           : 0xE2286C, 0x4, 0x620;
 }
 
 // Version 1.0.6 (Old)
@@ -36,7 +39,7 @@ state("bio4", "1.0.6")
     byte frameRate        : 0x827F38;
     byte screenState      : 0x856F00;
     byte screenTransition : 0x855708;
-    byte menu             : 0x877484;
+    byte menuType         : 0x877484;
     byte character        : 0x85BEA8;
     byte chapter          : 0x85BE7A;
     byte item             : 0x855664;
@@ -50,7 +53,7 @@ state("bio4", "1.0.6")
     bool isCutscene       : 0x802C5F;
     bool isMiniCutscene   : 0x86437D;
     bool isContact        : 0x87777B;
-    bool isMissionText       : 0x814030;
+    bool isMissionText    : 0x814030;
 
     byte difficulty       : 0x85F35C;
     short da              : 0x85BE74;
@@ -59,7 +62,7 @@ state("bio4", "1.0.6")
     short totalKills      : 0x85F348;
     uint money            : 0x85BE88;
 
-    bool F10Key            : 0xE1EFEC, 0x4, 0x620;
+    bool F10Key           : 0xE1EFEC, 0x4, 0x620;
 }
 
 // Version 1.0.6 (Latest in Japan)
@@ -68,7 +71,7 @@ state("bio4", "1.0.6 (Japan)")
     byte frameRate        : 0x827F48;
     byte screenState      : 0x856F00;
     byte screenTransition : 0x855708;
-    byte menu             : 0x877484;
+    byte menuType         : 0x877484;
     byte character        : 0x85BEA8;
     byte chapter          : 0x85BE7A;
     byte item             : 0x855664;
@@ -82,7 +85,7 @@ state("bio4", "1.0.6 (Japan)")
     bool isCutscene       : 0x802C5F;
     bool isMiniCutscene   : 0x86437D;
     bool isContact        : 0x87777B;
-    bool isMissionText       : 0x814040;
+    bool isMissionText    : 0x814040;
 
     byte difficulty       : 0x85F35C;
     short da              : 0x85BE74;
@@ -470,14 +473,22 @@ update
     // Door Loads and Options
     bool isDoorLoads = current.screenState != 3;
 
-    // Menu Loads
-    bool isMenuLoads = current.screenTransition == 2 && current.menu != 0;
+    bool villageTutorial = current.menuType == 64 && current.room == 257;
+    bool churchTutorial = current.menuType == 64 && current.room == 279;
+    bool chapter3_1EndCutscenePausing = current.room == 516 && current.isCutscene;
+    bool verdugoSplitPausing = current.isEvent == 1 && current.room == 545 && current.isMiniCutscene == 0 && !current.isEndOfChapter;
+    bool chapter4_2StartPausing = current.isEvent == 1 && current.room == 544 && current.isMiniCutscene == 0 && !current.isEndOfChapter;
+    bool chapter4_2EndPausing = current.isEvent == 1 && current.room == 541 && current.isMiniCutscene == 0 && !current.isEndOfChapter;
+    bool chapter4_3StartEndPausing = current.isEvent == 1 && current.room == 549 && current.isMiniCutscene == 0 && !current.isEndOfChapter; 
+    bool salazarStatuePausing = current.isEvent == 1 && current.room == 550 && current.isMiniCutscene == 0 && !current.isEndOfChapter; 
+    bool afterElevatorPausing = current.isEvent == 1 && current.room == 551 && current.isMiniCutscene == 0; 
+    bool chapter4_4EndPausing = current.isEvent == 1 && current.room == 554 && current.isMiniCutscene == 0 && !current.isEndOfChapter;
+    bool krauserCutscenePausing = current.isEvent == 3 && current.room == 791 && current.isMiniCutscene == 0 && !current.isQTE;
+    bool saddlerElevatorPausing = current.isEvent == 1 && current.room == 818 && current.isMiniCutscene == 0;
 
-    // Cutscenes
-    bool isCutscenes = current.isMovie || current.isCutscene || current.isMiniCutscene || current.isContact;
 
     // Add load removal frames
-    if (!isDoorLoads && !isMenuLoads && !isCutscenes)
+    if (!isDoorLoads && !villageTutorial && !churchTutorial && !chapter3_1EndCutscenePausing && !verdugoSplitPausing && !chapter4_2StartPausing && !chapter4_2EndPausing && !chapter4_3StartEndPausing && !salazarStatuePausing && !afterElevatorPausing && !chapter4_4EndPausing && !krauserCutscenePausing && !saddlerElevatorPausing)
     {
         vars.elapsedFrames += current.totalFrames - old.totalFrames;
     }
@@ -485,12 +496,6 @@ update
     // Debug Timers
     if (isDoorLoads) vars.doorLoadTime.Start();
     else vars.doorLoadTime.Stop();
-
-    if (isMenuLoads) vars.menuLoadTime.Start();
-    else vars.menuLoadTime.Stop();
-
-    if (isCutscenes) vars.cutsceneTime.Start();
-    else vars.cutsceneTime.Stop();
 
     // Show DA
     if (current.da != old.da && settings["ShowDA"])
@@ -566,7 +571,7 @@ update
         int prevChapterInvCount = vars.chapterInvCount;
 
         // Check to see if the inventory is opened
-        if ((current.menu == 1 || current.menu == 128) && old.menu == 0)
+        if ((current.menuType == 1 || current.menuType == 128) && old.menuType == 0)
         {
             vars.totalInvCount++;
             vars.chapterInvCount++;
@@ -586,7 +591,7 @@ update
     }
 
     // Show Inventory Time
-    if ((current.menu == 1 || current.menu == 128) && settings["ShowInventoryTime"])
+    if ((current.menuType == 1 || current.menuType == 128) && settings["ShowInventoryTime"])
     {
         var componentInvTime = vars.updateTextComponent("Inventory Time");
         componentInvTime.Text2 = vars.inventoryTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
@@ -629,7 +634,7 @@ start
     }
 
     // Start the timer after the Separate Ways' map is skipped
-    if (current.menu == 0 && old.menu == 2 && vars.characters[current.character] == "Ada" && current.room == 1280 && settings["SeparateWaysSplits"])
+    if (current.menuType == 0 && old.menuType == 2 && vars.characters[current.character] == "Ada" && current.room == 1280 && settings["SeparateWaysSplits"])
     {
         vars.gameMode = vars.gameModes["SW"];
         return true;
