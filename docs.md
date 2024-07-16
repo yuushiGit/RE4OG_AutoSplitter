@@ -20,7 +20,7 @@
 | isCutscene | Realtime Rendering Cutscenes? | 
 | isMiniCutscene | Mini Cutscenes? | 
 | eventType | 3 when we are in an unskippable cutscene such as Krauser Cutscene, 1 when the HUD at the bottom right disappears, 0 in normal gameplay.
-| isContact | 10 when we are in a radio call with Hunnigan, Salazar or Saddler, otherwise 0. |
+| isRadioCall | 10 when we are in a radio call with Hunnigan, Salazar or Saddler, otherwise 0. |
 |screenState| 6 when we are in the options menu, 4 when a loading begins, 2 when the loading is halfway through, and 3 when the loading has finished. |
 | screenTransition | ? |
 | sample | Assignment Ada? |
