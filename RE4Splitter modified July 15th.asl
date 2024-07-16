@@ -22,7 +22,7 @@ state("bio4", "1.1.0")
     bool isCutscene       : 0x803C5F;
     byte isMiniCutscene   : 0x867C0D; 
     byte eventType        : 0x867C0A;
-    bool isContact        : 0x87AFFB; 
+    bool isRadioCall      : 0x87AFFB; 
 
     // Loadings
     byte screenState      : 0x85A780; 
@@ -67,7 +67,7 @@ state("bio4", "1.0.6")
     bool isCutscene       : 0x802C5F;
     bool isMiniCutscene   : 0x86437D;
     // eventType is missing here
-    bool isContact        : 0x87777B;
+    bool isRadioCall      : 0x87777B;
 
     // Loadings
     byte screenState      : 0x856F00;
@@ -112,7 +112,7 @@ state("bio4", "1.0.6 (Japan)")
     bool isCutscene       : 0x802C5F;
     bool isMiniCutscene   : 0x86437D;
     // eventType is missing here
-    bool isContact        : 0x87777B;
+    bool isRadioCall      : 0x87777B;
 
     // Loadings
     byte screenState      : 0x856F00;
