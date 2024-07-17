@@ -1,6 +1,6 @@
 <Settings>
-	<Setting Id="MainGameSplits" Label="Main Game" State="true">
-		<Setting Id="MainGameChapterSplits" Label="Chapters" State="true">
+	<Setting Id="MainGameSplits" Label="Main Game Splits" State="true">
+		<Setting Id="MainGameChapterSplits" Label="Chapter Splits" State="true">
 			<Setting Id="Chapter1" Label="Chapter 1-1" State="true"/>
 			<Setting Id="Chapter2" Label="Chapter 1-2" State="true"/>
 			<Setting Id="Chapter3" Label="Chapter 1-3" State="true"/>
@@ -20,7 +20,7 @@
 			<Setting Id="Chapter17" Label="Chapter 5-3" State="true"/>
 			<Setting Id="Chapter18" Label="Chapter 5-4" State="true"/>
 		</Setting>
-		<Setting Id="MainGameKeyItemSplits" Label="Key Items" State="false">
+		<Setting Id="MainGameKeyItemSplits" Label="Key Item Splits" State="false">
 			<Setting Id="MainGameC1KeyItemSplits" Label="Chapter 1" State="false">
 				<Setting Id="Item260164" Label="Emblem (Right half)" State="true"/>
 				<Setting Id="Item260165" Label="Emblem (Left half)" State="true"/>
@@ -63,7 +63,7 @@
 				<Setting Id="Item818136" Label="Jet-ski Key" State="true"/>
 			</Setting>
 		</Setting>
-		<Setting Id="MainGameEventSplits" Label="Events" State="false">
+		<Setting Id="MainGameEventSplits" Label="Event Splits" State="false">
 			<Setting Id="MainGameC1EventSplits" Label="Chapter 1" State="false">
 				<Setting Id="Event256s03" Label="Meet First Ganado" State="true"/>
 				<Setting Id="Event256s20" Label="Defeat First Ganado" State="true"/>
@@ -142,14 +142,14 @@
 			</Setting>
 		</Setting>
 	</Setting>
-	<Setting Id="SeparateWaysSplits" Label="Separate Ways" State="true">
-		<Setting Id="SeparateWaysChapterSplits" Label="Chapters" State="true">
+	<Setting Id="SeparateWaysSplits" Label="Separate Ways Splits" State="true">
+		<Setting Id="SeparateWaysChapterSplits" Label="Chapter Splits" State="true">
 			<Setting Id="Chapter21" Label="Chapter 1" State="true"/>
 			<Setting Id="Chapter22" Label="Chapter 2" State="true"/>
 			<Setting Id="Chapter23" Label="Chapter 3" State="true"/>
 			<Setting Id="Chapter24" Label="Chapter 4" State="true"/>
 		</Setting>
-		<Setting Id="SeparateWaysKeyItemSplits" Label="Key Items" State="false">
+		<Setting Id="SeparateWaysKeyItemSplits" Label="Key Item Splits" State="false">
 			<Setting Id="SeparateWaysC1KeyItemSplits" Label="Chapter 1" State="false">
 				<Setting Id="Item128059" Label="Insignia Key" State="true"/>
 				<Setting Id="Item1282118" Label="Green Catseye" State="true"/>
@@ -167,7 +167,7 @@
 				<Setting Id="Item129951" Label="Activation Key (red)" State="true"/>
 			</Setting>
 		</Setting>
-		<Setting Id="SeparateWaysEventSplits" Label="Events" State="false">
+		<Setting Id="SeparateWaysEventSplits" Label="Event Splits" State="false">
 			<Setting Id="SeparateWaysC1EventSplits" Label="Chapter 1" State="false">
 				<Setting Id="Event1280_ev" Label="Dr.Salvador spawns" State="true"/>
 				<Setting Id="Event1283s00" Label="Church's bell rings" State="true"/>
@@ -198,8 +198,8 @@
 			</Setting>
 		</Setting>
 	</Setting>
-	<Setting Id="AssignmentAdaSplits" Label="Assignment Ada" State="true">
-		<Setting Id="PlagaSampleSplits" Label="Plaga Samples" State="true">
+	<Setting Id="AssignmentAdaSplits" Label="Assignment Ada Splits" State="true">
+		<Setting Id="PlagaSampleSplits" Label="Plaga Sample Splits" State="true">
 			<Setting Id="Sample1" Label="Plaga Sample 1" State="true"/>
 			<Setting Id="Sample2" Label="Plaga Sample 2" State="true"/>
 			<Setting Id="Sample3" Label="Plaga Sample 3" State="true"/>
@@ -207,16 +207,16 @@
 			<Setting Id="Sample5" Label="Plaga Sample 5" State="true"/>
 		</Setting>
 	</Setting>
+	<Setting Id="DoorSplits" Label="Door Splits" State="true"/>
 	<Setting Id="Infos" Label="Information" State="false">
-		<Setting Id="ShowDA" Label="DA" State="true"/>
-		<Setting Id="ShowHealth" Label="Health" State="true"/>
-		<Setting Id="ShowMoney" Label="Money" State="true"/>
-		<Setting Id="ShowHitRatio" Label="Hit Ratio" State="true"/>
 		<Setting Id="ShowKills" Label="Kills" State="true"/>
-		<Setting Id="ShowDeaths" Label="Deaths" State="true"/>
+		<Setting Id="ShowMoney" Label="Money" State="true"/>
+		<Setting Id="ShowDA" Label="DA" State="true"/>
 		<Setting Id="ShowInGameTime" Label="In Game Time" State="true"/>
+		<Setting Id="ShowHealth" Label="Health" State="true"/>
+		<Setting Id="ShowHitRatio" Label="Hit Ratio" State="true"/>
+		<Setting Id="ShowDeaths" Label="Deaths" State="true"/>
 		<Setting Id="ShowInventoryCount" Label="Inventory Count" State="true"/>
 		<Setting Id="ShowInventoryTime" Label="Inventory Time" State="true"/>
 	</Setting>
-	<Setting Id="DoorSplits" Label="Door Splits" State="true"/>
 </Settings>
