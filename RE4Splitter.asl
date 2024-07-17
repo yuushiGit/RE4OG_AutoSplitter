@@ -1,28 +1,38 @@
 // Version 1.1.0 (Latest)
 state("bio4", "1.1.0")
 {
+    // Framecounter components
     byte frameRate        : 0x82B7A0;
-    byte screenState      : 0x85A780;
-    byte screenTransition : 0x858F88;
-    byte menu             : 0x87AD04;
+    long totalFrames      : 0xCECB18;
+
+    // Misc
+    byte menuType         : 0x87AD04;
     byte character        : 0x85F728;
     byte chapter          : 0x85F6FA;
     byte item             : 0x858EE4;
     short room            : 0x85A788;
     uint igt              : 0x85F704;
-    long totalFrames      : 0xCECB18;
-    long sample           : 0x85F9EC;
+    bool isEndOfChapter   : 0x867BA1;
+    bool isQTE            : 0x863A58;
+
+    // Cutscenes
     string7 movie         : 0x86CE8C;
     string7 cutscene      : 0x803C6E;
     bool isMovie          : 0x86CD44;
     bool isCutscene       : 0x803C5F;
     bool isMiniCutscene   : 0x867C0D;
-    bool isRadioCall      : 0x87AFFB;
-    bool isEndOfChapter   : 0x867BA1;
-    bool isSubtitle       : 0x806F39;
-    bool isQTE            : 0x863A58;
     bool isEvent          : 0x867C0A;
+    bool isRadioCall      : 0x87AFFB;
 
+    // Loadings
+    byte screenState      : 0x85A780;
+    byte screenTransition : 0x858F88;
+
+    // Assignment Ada
+    long sample           : 0x85F9EC;
+    bool isText           : 0x806F39;
+
+    // SRT variables
     byte difficulty       : 0x862BDC;
     short da              : 0x85F6F4;
     short health          : 0x85F714;
@@ -40,28 +50,38 @@ state("bio4", "1.1.0")
 // Version 1.0.6 (Old)
 state("bio4", "1.0.6")
 {
+    // Framecounter components
     byte frameRate        : 0x827F38;
-    byte screenState      : 0x856F00;
-    byte screenTransition : 0x855708;
-    byte menu             : 0x877484;
+    long totalFrames      : 0xCE9298;
+
+    // Misc
+    byte menuType         : 0x877484;
     byte character        : 0x85BEA8;
     byte chapter          : 0x85BE7A;
     byte item             : 0x855664;
     short room            : 0x856F08;
     uint igt              : 0x85BE84;
-    long totalFrames      : 0xCE9298;
-    long sample           : 0x85C16C;
+    bool isEndOfChapter   : 0x864311;
+    bool isQTE            : 0x8601D8;
+
+    // Cutscenes
     string7 movie         : 0x8695FC;
     string7 cutscene      : 0x802C6E;
     bool isMovie          : 0x8694B4;
     bool isCutscene       : 0x802C5F;
     bool isMiniCutscene   : 0x86437D;
-    bool isRadioCall      : 0x87777B;
-    bool isEndOfChapter   : 0x864311;
-    bool isSubtitle       : 0x805F39;
-    bool isQTE            : 0x8601D8;
     bool isEvent          : 0x86437A;
+    bool isRadioCall      : 0x87777B;
 
+    // Loadings
+    byte screenState      : 0x856F00;
+    byte screenTransition : 0x855708;
+
+    // Assignment Ada
+    long sample           : 0x85C16C;
+    bool isText           : 0x805F39;
+
+    // SRT variables
     byte difficulty       : 0x85F35C;
     short da              : 0x85BE74;
     short health          : 0x85BE94;
@@ -78,29 +98,39 @@ state("bio4", "1.0.6")
 
 // Version 1.0.6 (Latest in Japan)
 state("bio4", "1.0.6 (Japan)")
-{
+{   
+    // Framecounter components
     byte frameRate        : 0x827F48;
-    byte screenState      : 0x856F00;
-    byte screenTransition : 0x855708;
-    byte menu             : 0x877484;
+    long totalFrames      : 0xCE9298;
+
+    // Misc
+    byte menuType         : 0x877484;
     byte character        : 0x85BEA8;
     byte chapter          : 0x85BE7A;
     byte item             : 0x855664;
     short room            : 0x856F08;
     uint igt              : 0x85BE84;
-    long totalFrames      : 0xCE9298;
-    long sample           : 0x85C16C;
+    bool isEndOfChapter   : 0x864311;
+    bool isQTE            : 0x8601D8;
+
+    // Cutscenes
     string7 movie         : 0x8695FC;
     string7 cutscene      : 0x802C6E;
     bool isMovie          : 0x8694B4;
     bool isCutscene       : 0x802C5F;
     bool isMiniCutscene   : 0x86437D;
-    bool isRadioCall      : 0x87777B;
-    bool isEndOfChapter   : 0x864311;
-    bool isSubtitle       : 0x805F39;
-    bool isQTE            : 0x8601D8;
     bool isEvent          : 0x86437A;
+    bool isRadioCall      : 0x87777B;
 
+    // Loadings
+    byte screenState      : 0x856F00;
+    byte screenTransition : 0x855708;
+
+    // Assignment Ada
+    long sample           : 0x85C16C;
+    bool isText           : 0x805F39;
+
+    // SRT variables
     byte difficulty       : 0x85F35C;
     short da              : 0x85BE74;
     short health          : 0x85BE94;
@@ -275,7 +305,7 @@ update
     bool isDoorLoads = current.screenState != 3;
 
     // Cutscenes
-    bool isCutscenes = current.isEvent && !current.isMovie && !current.isCutscene && !current.isMiniCutscene && !current.isRadioCall && !current.isEndOfChapter && !current.isSubtitle && current.menu == 0;
+    bool isCutscenes = current.isEvent && !current.isMovie && !current.isCutscene && !current.isMiniCutscene && !current.isRadioCall && !current.isEndOfChapter && !current.isText && current.menuType == 0;
     bool isQTECutscenes = current.isCutscene && !current.isQTE && current.room == 791; // TODO: Detect the cutscenes containing QTE
 
     // Add load removal frames
@@ -390,7 +420,7 @@ update
         int prevChapterInvCount = vars.chapterInvCount;
 
         // Check to see if the inventory is opened
-        if ((current.menu == 1 || current.menu == 128) && old.menu == 0)
+        if ((current.menuType == 1 || current.menuType == 128) && old.menuType == 0)
         {
             vars.totalInvCount++;
             vars.chapterInvCount++;
@@ -411,7 +441,7 @@ update
     }
 
     // Show Inventory Time
-    if ((current.menu == 1 || current.menu == 128) && settings["ShowInventoryTime"])
+    if ((current.menuType == 1 || current.menuType == 128) && settings["ShowInventoryTime"])
     {
         // Update the text
         var componentInvTime = vars.updateTextComponent("Inventory Time");
@@ -447,14 +477,14 @@ start
     }
 
     // Start the timer after the Separate Ways map is skipped
-    if (current.menu == 0 && old.menu == 2 && vars.characters[current.character] == "Ada" && current.room == 1280 && settings["SeparateWaysSplits"])
+    if (current.menuType == 0 && old.menuType == 2 && vars.characters[current.character] == "Ada" && current.room == 1280 && settings["SeparateWaysSplits"])
     {
         vars.gameMode = vars.gameModes["SW"];
         return true;
     }
 
     // Start the timer after the Assignment Ada text is skipped
-    if (!current.isSubtitle && old.isSubtitle && vars.characters[current.character] == "Ada" && current.room == 288 && settings["AssignmentAdaSplits"])
+    if (!current.isText && old.isText && vars.characters[current.character] == "Ada" && current.room == 288 && settings["AssignmentAdaSplits"])
     {
         vars.gameMode = vars.gameModes["AA"];
         return true;
