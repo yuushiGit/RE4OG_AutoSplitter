@@ -558,11 +558,7 @@ onReset
 reset
 {
     // Reset the timer when the IGT is 0
-    if (current.igt == 0 && old.igt > 0)
-    {
-        return true;
-    }
-    return false;
+    return (current.igt == 0 && old.igt > 0);
 }
 
 exit
