@@ -356,7 +356,6 @@ update
                 break;
         }
 
-        // Update the text
         var componentDA = vars.updateTextComponent("DA");
         componentDA.Text2 = string.Format("{0} ({1})", calcDA, difficultyName);
     }
@@ -387,7 +386,6 @@ update
         double chapterHitRatio = calcHitRatio(current.chapterShotsHit, current.chapterShots);
         double totalHitRatio = calcHitRatio(current.totalShotsHit, current.totalShots);
 
-        // Update the text
         var componentHitRatio = vars.updateTextComponent("Hit Ratio");
         componentHitRatio.Text2 = string.Format("Total: {0}% Chapter: {1}%", totalHitRatio, chapterHitRatio);
     }
@@ -432,7 +430,6 @@ update
             vars.chapterInvCount = 0;
         }
 
-        // Update the text
         if (vars.chapterInvCount != prevChapterInvCount)
         {
             var componentInvCount = vars.updateTextComponent("Inventory Count");
@@ -443,7 +440,6 @@ update
     // Show Inventory Time
     if ((current.menuType == 1 || current.menuType == 128) && settings["ShowInventoryTime"])
     {
-        // Update the text
         var componentInvTime = vars.updateTextComponent("Inventory Time");
         componentInvTime.Text2 = vars.inventoryTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
 
