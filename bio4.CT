@@ -81,7 +81,7 @@
           <Description>"isQTE"</Description>
           <ShowAsSigned>0</ShowAsSigned>
           <VariableType>Byte</VariableType>
-          <Address>bio4.exe+0x863A58</Address>
+          <Address>bio4.exe+863A58</Address>
         </CheatEntry>
         <CheatEntry>
           <ID>11</ID>
