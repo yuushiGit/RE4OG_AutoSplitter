@@ -152,7 +152,7 @@ startup
 {
     // Load the settings
     Assembly.Load(File.ReadAllBytes("Components/asl-help")).CreateInstance("Basic");
-    vars.Helper.Settings.CreateFromXml("Components/RE4Original.Settings.xml");
+    vars.Helper.Settings.CreateFromXml("Components/RE4Splitter.Settings.xml");
 
     // Check the timing method
     if (timer.CurrentTimingMethod == TimingMethod.RealTime)
