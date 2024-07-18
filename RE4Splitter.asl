@@ -14,6 +14,8 @@ state("bio4", "1.1.0")
     uint igt              : 0x85F704;
     bool isEndOfChapter   : 0x867BA1;
     bool isQTE            : 0x863A58;
+    bool isText           : 0x806F39;
+    bool isPickupItem     : 0x867C12;
 
     // Cutscenes
     string7 movie         : 0x86CE8C;
@@ -30,7 +32,6 @@ state("bio4", "1.1.0")
 
     // Assignment Ada
     long sample           : 0x85F9EC;
-    bool isText           : 0x806F39;
 
     // SRT variables
     byte difficulty       : 0x862BDC;
@@ -63,6 +64,8 @@ state("bio4", "1.0.6")
     uint igt              : 0x85BE84;
     bool isEndOfChapter   : 0x864311;
     bool isQTE            : 0x8601D8;
+    bool isText           : 0x805F39;
+    bool isPickupItem     : 0x864382;
 
     // Cutscenes
     string7 movie         : 0x8695FC;
@@ -79,7 +82,6 @@ state("bio4", "1.0.6")
 
     // Assignment Ada
     long sample           : 0x85C16C;
-    bool isText           : 0x805F39;
 
     // SRT variables
     byte difficulty       : 0x85F35C;
@@ -98,7 +100,7 @@ state("bio4", "1.0.6")
 
 // Version 1.0.6 (Latest in Japan)
 state("bio4", "1.0.6 (Japan)")
-{   
+{
     // Framecounter components
     byte frameRate        : 0x827F48;
     long totalFrames      : 0xCE9298;
@@ -112,6 +114,8 @@ state("bio4", "1.0.6 (Japan)")
     uint igt              : 0x85BE84;
     bool isEndOfChapter   : 0x864311;
     bool isQTE            : 0x8601D8;
+    bool isText           : 0x805F39;
+    bool isPickupItem     : 0x864382;
 
     // Cutscenes
     string7 movie         : 0x8695FC;
@@ -128,7 +132,6 @@ state("bio4", "1.0.6 (Japan)")
 
     // Assignment Ada
     long sample           : 0x85C16C;
-    bool isText           : 0x805F39;
 
     // SRT variables
     byte difficulty       : 0x85F35C;
@@ -304,12 +307,15 @@ update
     // Door Loads and Options
     bool isDoorLoads = current.screenState != 3;
 
+    // Tutorials
+    bool isTutorials = current.menuType == 64 && (current.room == 257 || current.room == 279);
+
     // Cutscenes
-    bool isCutscenes = current.isEvent && !current.isMovie && !current.isCutscene && !current.isMiniCutscene && !current.isRadioCall && !current.isEndOfChapter && !current.isText && current.menuType == 0;
-    bool isQTECutscenes = current.isCutscene && !current.isQTE && current.room == 791; // TODO: Detect the cutscenes containing QTE
+    bool isCutscenes = current.isEvent && !current.isMovie && !current.isCutscene && !current.isMiniCutscene && !current.isRadioCall && !current.isEndOfChapter && !current.isText && !current.isPickupItem && current.menuType == 0;
+    bool isKrauserCutscene = current.isCutscene && !current.isQTE && current.room == 791;
 
     // Add load removal frames
-    if (!isDoorLoads && !isCutscenes && !isQTECutscenes)
+    if (!isDoorLoads && !isTutorials && !isCutscenes && !isKrauserCutscene)
     {
         vars.elapsedFrames += current.totalFrames - old.totalFrames;
     }
@@ -318,7 +324,7 @@ update
     if (isDoorLoads) vars.doorLoadTime.Start();
     else vars.doorLoadTime.Stop();
 
-    if (isCutscenes || isQTECutscenes) vars.cutsceneTime.Start();
+    if (isCutscenes || isKrauserCutscene) vars.cutsceneTime.Start();
     else vars.cutsceneTime.Stop();
 
     // Show DA
@@ -584,7 +590,7 @@ onReset
 reset
 {
     // Reset the timer when the IGT is 0
-    return (current.igt == 0 && old.igt > 0);
+    return current.igt == 0 && old.igt > 0;
 }
 
 exit
