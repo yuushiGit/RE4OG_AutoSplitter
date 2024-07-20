@@ -32,6 +32,7 @@ state("bio4", "1.1.0")
 
     // Assignment Ada
     long sample           : 0x85F9EC;
+    bool isMissionText    : 0x817840;
 
     // SRT variables
     byte difficulty       : 0x862BDC;
@@ -82,6 +83,7 @@ state("bio4", "1.0.6")
 
     // Assignment Ada
     long sample           : 0x85C16C;
+    bool isMissionText    : 0x814030;
 
     // SRT variables
     byte difficulty       : 0x85F35C;
@@ -132,6 +134,7 @@ state("bio4", "1.0.6 (Japan)")
 
     // Assignment Ada
     long sample           : 0x85C16C;
+    bool isMissionText    : 0x814040;
 
     // SRT variables
     byte difficulty       : 0x85F35C;
@@ -472,7 +475,7 @@ onStart
 start
 {
     // Start the timer after the Main Game's costume is selected
-    if (!current.isMovie && old.isMovie && vars.characters[current.character] == "Leon" && current.room == 288 && settings["MainGameSplits"])
+    if (current.room == 256 && old.room == 288 && vars.characters[current.character] == "Leon" && settings["MainGameSplits"])
     {
         vars.gameMode = vars.gameModes["MG"];
         return true;
@@ -486,7 +489,7 @@ start
     }
 
     // Start the timer after the Assignment Ada text is skipped
-    if (!current.isText && old.isText && vars.characters[current.character] == "Ada" && current.room == 288 && settings["AssignmentAdaSplits"])
+    if (!current.isMissionText && old.isMissionText && vars.characters[current.character] == "Ada" && (current.room == 288 || current.room == 1029) && settings["AssignmentAdaSplits"])
     {
         vars.gameMode = vars.gameModes["AA"];
         return true;
@@ -550,13 +553,13 @@ split
     }
 
     // Main Game Ending
-    if (current.cutscene != old.cutscene && cutsceneId == "819s10" && vars.gameMode == vars.gameModes["MG"])
+    if (current.movie != old.movie && movieId == "819ng." && vars.gameMode == vars.gameModes["MG"])
     {
         return true;
     }
 
     // Separate Ways Ending
-    if (current.cutscene != old.cutscene && cutsceneId == "1310s10" && vars.gameMode == vars.gameModes["SW"])
+    if (current.movie != old.movie && movieId == "1310s10" && vars.gameMode == vars.gameModes["SW"])
     {
         return true;
     }
