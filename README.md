@@ -15,7 +15,7 @@
 | isEndOfChapter | 1 if we are in an end of chapter screen, 0 otherwise.
 | isQTE | 1 if we are in a QTE, 0 otherwise. |
 | isText | 1 when a text is displayed on screen, 0 after it's skipped. |
-| isPickupItem | 1 when an item pickup prompt is on screen, 0 otherwise. | 
+| isPickupItem | 1 when an item pickup prompt is on screen, 0 otherwise. |
 | movie | The ID of the pre-rendered cutscenes. |
 | cutscene | The ID of the realtime rendering cutscenes. |
 | isMovie | 1 if we are in the pre-rendered cutscenes, 0 otherwise. |
@@ -26,13 +26,14 @@
 | screenState| 6 when we are in the options menu, 4 when a loading begins, 2 when the loading is halfway through, and 3 when the loading has finished. |
 | screenTransition | 0-255. 0 when we are in the normal screen, 255 when we are in the blackscreen. |
 | sample | Plaga samples in Assignment Ada. The value increases as samples are obtained. |
+| isMissionText | 1 while Assignment Ada's initial mission objective text is displayed, 0 after it's skipped. |
 | difficulty | 1 for Amateur, 3 for Easy, 5 for Normal, 6 for Professional. |
 | da | Current difficulty adjustment value. |
 | health | Health value of the current main character. |
-| chapterShots | Number of shots in the current chapter. Any weapon counts. | 
-| totalShots | Number of shots in total in the game. Any weapon counts. | 
+| chapterShots | Number of shots in the current chapter. Any weapon counts. |
+| totalShots | Number of shots in total in the game. Any weapon counts. |
 | chapterShotsHit | Number of shots in the current chapter that hit an enemy. Any weapon counts. |
-| totalShotsHit | Number of shots in total in the game that hit an enemy. Any weapon counts. | 
+| totalShotsHit | Number of shots in total in the game that hit an enemy. Any weapon counts. |
 | chapterKills | Total kills so far in the current chapter. |
 | totalKills | Total kills so far in the whole game. |
 | chapterDeaths | Number of times the player has died in the current chapter. |
