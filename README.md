@@ -23,7 +23,7 @@
 | isMiniCutscene | 1 if we are in the mini cutscenes, 0 otherwise. |
 | isEvent | 3 when we are in an unskippable cutscene such as Krauser Cutscene, 1 when the HUD at the bottom right disappears, 0 in normal gameplay.
 | isRadioCall | 10 when we are in a radio call with Hunnigan, Salazar or Saddler, otherwise 0. |
-| screenState| 6 when we are in the options menu, 4 when a loading begins, 2 when the loading is halfway through, and 3 when the loading has finished. |
+| screenState| 6 when we are in the options menu, 4 when a loading begins, 2 when the loading is halfway through, 3 when the loading has finished, 1 when a "stage" is loading. |
 | screenTransition | 0-255. 0 when we are in the normal screen, 255 when we are in the blackscreen. |
 | sample | Plaga samples in Assignment Ada. The value increases as samples are obtained. |
 | isMissionText | 1 while Assignment Ada's initial mission objective text is displayed, 0 after it's skipped. |
