@@ -6,7 +6,7 @@
 | --- | --- |
 | frameRate | The selected framerate on the video settings. Can be 30 or 60. |
 |totalFrames | The game's current frame, constantly looping. |
-|menuType| The type of menu we are in. 128 when we enter the treasures menu through interacting with a door, 64 when we are in a tutorial screen, 2 when we are on the map screen, 1 when we are in the inventory, 0 when none of them.|
+|menuType| The type of menu we are in. 128 when we enter the treasures menu through interacting with a door, 64 when we are in a tutorial screen, 32 when we are in a radio call, 16 when we are in the merchant, 4 when an item pickup prompt is on screen, 2 when we are on the map screen, 1 when we are in the inventory, 0 when none of them.|
 |character |5 when we are playing as Wesker, 4 when we are playing as Krauser, 3 when we are playing as Hunk, 2 when we are playing as Ada, 1 when we are playing as Ashley, 0 when we are playing as Leon.|
 |chapter| [The ID of the current chapter.](https://docs.google.com/spreadsheets/d/1dw5leSHZ0XiCvP7afODyuC10RbykQeopfjoh7mBEeHY/edit?usp=sharing) |
 |item | [The ID of the key item being picked up.](https://docs.google.com/spreadsheets/d/16VzcxmYCJKCEf0td7Yvo-Efhnkqh5WDnmo8fFfmdjV8/edit?usp=sharing) |
