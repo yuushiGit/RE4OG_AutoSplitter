@@ -211,12 +211,13 @@
 	<Setting Id="Infos" Label="Information" State="false">
 		<Setting Id="ShowKills" Label="Kills" State="true"/>
 		<Setting Id="ShowMoney" Label="Money" State="true"/>
-		<Setting Id="ShowDA" Label="DA" State="true"/>
+		<Setting Id="ShowDA" Label="DA" State="false"/>
 		<Setting Id="ShowInGameTime" Label="In Game Time" State="true"/>
-		<Setting Id="ShowHealth" Label="Health" State="true"/>
-		<Setting Id="ShowHitRatio" Label="Hit Ratio" State="true"/>
-		<Setting Id="ShowDeaths" Label="Deaths" State="true"/>
+		<Setting Id="ShowHealth" Label="Health" State="false"/>
+		<Setting Id="ShowHitRatio" Label="Hit Ratio" State="false"/>
+		<Setting Id="ShowDeaths" Label="Deaths" State="false"/>
 		<Setting Id="ShowInventoryCount" Label="Inventory Count" State="true"/>
-		<Setting Id="ShowInventoryTime" Label="Inventory Time" State="true"/>
+		<Setting Id="ShowInventoryTime" Label="Inventory Time" State="false"/>
+		<Setting Id="ShowPauseCount" Label="Pause Count" State="true"/>
 	</Setting>
 </Settings>

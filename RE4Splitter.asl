@@ -283,6 +283,8 @@ init
         vars.chapterInvCount = 0;                                 // Inventories opened in chapter
         vars.totalInvCount = 0;                                   // Inventories opened in total
         vars.inventoryTime = new Stopwatch();                     // Inventory Time
+        vars.roomPauseCount = 0;                               // Pauses done in room
+        vars.totalPauseCount = 0;                                 // Pauses done in total
 
         // Debug
         vars.doorLoadTime = new Stopwatch();
@@ -462,6 +464,32 @@ update
         if (current.screenTransition > old.screenTransition && old.screenTransition == 0)
         {
             vars.inventoryTime.Stop();
+        }
+    }
+
+    // Show Pause Count
+    if (settings["ShowPauseCount"])
+    {
+        // Store the previous room pause count
+        int prevRoomPauseCount = vars.roomPauseCount;
+
+        // Check to see if the options menu is opened
+        if (current.screenState == 6 && old.screenState != 6)
+        {
+            vars.totalPauseCount++;
+            vars.roomPauseCount++;
+        }
+
+        // Initialize chapter pause count at the end of the room
+        if (current.room != old.room)
+        {
+            vars.roomPauseCount = 0;
+        }
+
+        if (vars.roomPauseCount != prevRoomPauseCount)
+        {
+            var componentPauseCount = vars.updateTextComponent("Pause Count");
+            componentPauseCount.Text2 = string.Format("Total: {0} Room: {1}", vars.totalPauseCount, vars.roomPauseCount);
         }
     }
 }
