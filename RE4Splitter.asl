@@ -287,8 +287,9 @@ init
         vars.totalPauseCount = 0;                                 // Pauses done in total
 
         // Debug
-        vars.doorLoadTime = new Stopwatch();
-        vars.cutsceneTime = new Stopwatch();
+        vars.doorLoadsTime = new Stopwatch();
+        vars.optionsTime = new Stopwatch();
+        vars.cutscenesTime = new Stopwatch();
     });
     vars.resetVariables();
 }
@@ -301,36 +302,50 @@ update
         return false;
     }
 
-    // Debug Components
-    var componentDoorLoads = vars.updateTextComponent("Door Loads and Options");
-    var componentCutscenes = vars.updateTextComponent("Cutscenes");
-    var componentFrames = vars.updateTextComponent("Frames");
-    componentDoorLoads.Text2 = vars.doorLoadTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
-    componentCutscenes.Text2 = vars.cutsceneTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
-    componentFrames.Text2 = vars.elapsedFrames.ToString();
+    // ------------------------------------ When the timer pauses ------------------------------------
 
-    // Door Loads and Options
-    bool isDoorLoads = current.screenState != 3;
+    // Door Loads
+    bool isDoorLoads = current.screenState != 3 && current.screenState != 6;
 
-    // Tutorials
+    // Options
+    bool isOptions = current.screenState == 6;
+
+    // Tutorials (2nd room of 1-1 and last room of 2-1)
     bool isTutorials = current.menuType == 64 && (current.room == 257 || current.room == 279);
 
-    // Cutscenes
+    // Cutscenes 
     bool isCutscenes = current.isEvent && !current.isMovie && !current.isCutscene && !current.isMiniCutscene && !current.isRadioCall && !current.isEndOfChapter && !current.isText && !current.isPickupItem && current.menuType == 0;
     bool isKrauserCutscene = current.isCutscene && !current.isQTE && current.room == 791;
 
-    // Add load removal frames
-    if (!isDoorLoads && !isTutorials && !isCutscenes && !isKrauserCutscene)
+    // Add frames only if we're not in any of these situations
+    if (!isDoorLoads && !isOptions && !isTutorials && !isKrauserCutscene)
     {
         vars.elapsedFrames += current.totalFrames - old.totalFrames;
     }
 
-    // Debug Timers
-    if (isDoorLoads) vars.doorLoadTime.Start();
-    else vars.doorLoadTime.Stop();
+    // ------------------------------------ When the timer pauses ------------------------------------
 
-    if (isCutscenes || isKrauserCutscene) vars.cutsceneTime.Start();
-    else vars.cutsceneTime.Stop();
+    // Door Loads Debug Timer
+    var componentDoorLoads = vars.updateTextComponent("Door Loads");
+    componentDoorLoads.Text2 = vars.doorLoadsTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
+    if (isDoorLoads) vars.doorLoadsTime.Start();
+    else vars.doorLoadsTime.Stop();
+
+    // Options Debug Timer
+    var componentOptions = vars.updateTextComponent("Options");
+    componentOptions.Text2 = vars.optionsTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
+    if (isOptions) vars.optionsTime.Start();
+    else vars.optionsTime.Stop();    
+
+    // Cutscenes Debug Timer
+    var componentCutscenes = vars.updateTextComponent("Cutscenes");
+    componentCutscenes.Text2 = vars.cutscenesTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
+    if (isCutscenes || isKrauserCutscene) vars.cutscenesTime.Start();
+    else vars.cutscenesTime.Stop();
+
+    // Show Frames (Debug)
+    var componentFrames = vars.updateTextComponent("Frames");
+    componentFrames.Text2 = vars.elapsedFrames.ToString();
 
     // Show DA
     if (current.da != old.da && settings["ShowDA"])
