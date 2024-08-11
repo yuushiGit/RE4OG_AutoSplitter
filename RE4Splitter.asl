@@ -348,7 +348,7 @@ update
     componentFrames.Text2 = vars.elapsedFrames.ToString();
 
     // Show DA
-    if (current.da != old.da && settings["ShowDA"])
+    if (settings["ShowDA"] && current.da != old.da)
     {
         // Initialize DA
         short maxDA = 10999;
@@ -387,21 +387,21 @@ update
     }
 
     // Show Health
-    if ((current.health != old.health || current.character != old.character) && settings["ShowHealth"])
+    if (settings["ShowHealth"] && (current.health != old.health || current.character != old.character))
     {
         var componentHealth = vars.updateTextComponent("Health");
         componentHealth.Text2 = string.Format("{0} ({1})", current.health, vars.characters[current.character]);
     }
 
     // Show Money
-    if (current.money != old.money && settings["ShowMoney"])
+    if (settings["ShowMoney"] && current.money != old.money)
     {
         var componentMoney = vars.updateTextComponent("Money");
         componentMoney.Text2 = string.Format("{0} PTAS", current.money);
     }
 
     // Show Hit Ratio
-    if (current.chapterShots != old.chapterShots && settings["ShowHitRatio"])
+    if (settings["ShowHitRatio"] && current.chapterShots != old.chapterShots)
     {
         // Calculation of Hit Ratio
         Func<short, short, double> calcHitRatio = (shotsHit, shots) =>
@@ -417,21 +417,21 @@ update
     }
 
     // Show Kills
-    if (current.chapterKills != old.chapterKills && settings["ShowKills"])
+    if (settings["ShowKills"] && current.chapterKills != old.chapterKills)
     {
         var componentKills = vars.updateTextComponent("Kills");
         componentKills.Text2 = string.Format("Total: {0} Chapter: {1}", current.totalKills, current.chapterKills);
     }
 
     // Show Deaths
-    if (current.chapterDeaths != old.chapterDeaths && settings["ShowDeaths"])
+    if (settings["ShowDeaths"] && current.chapterDeaths != old.chapterDeaths)
     {
         var componentDeaths = vars.updateTextComponent("Deaths");
         componentDeaths.Text2 = string.Format("Total: {0} Chapter: {1}", current.totalDeaths, current.chapterDeaths);
     }
 
     // Show In Game Time
-    if (current.igt != old.igt && settings["ShowInGameTime"])
+    if (settings["ShowInGameTime"] && current.igt != old.igt)
     {
         var componentIGT = vars.updateTextComponent("In Game Time");
         componentIGT.Text2 = TimeSpan.FromSeconds(current.igt).ToString("hh\\:mm\\:ss");
@@ -464,7 +464,7 @@ update
     }
 
     // Show Inventory Time
-    if ((current.menuType == 1 || current.menuType == 128) && settings["ShowInventoryTime"])
+    if (settings["ShowInventoryTime"] && (current.menuType == 1 || current.menuType == 128))
     {
         var componentInvTime = vars.updateTextComponent("Inventory Time");
         componentInvTime.Text2 = vars.inventoryTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
@@ -518,21 +518,21 @@ onStart
 start
 {
     // Start the timer after the Main Game's costume is selected
-    if (current.room == 256 && old.room == 288 && vars.characters[current.character] == "Leon" && settings["MainGameSplits"])
+    if (settings["MainGameSplits"] && current.room == 256 && old.room == 288 && vars.characters[current.character] == "Leon")
     {
         vars.gameMode = vars.gameModes["MG"];
         return true;
     }
 
     // Start the timer after the Separate Ways map is skipped
-    if (current.menuType == 0 && old.menuType == 2 && vars.characters[current.character] == "Ada" && current.room == 1280 && settings["SeparateWaysSplits"])
+    if (settings["SeparateWaysSplits"] && current.menuType == 0 && old.menuType == 2 && vars.characters[current.character] == "Ada" && current.room == 1280)
     {
         vars.gameMode = vars.gameModes["SW"];
         return true;
     }
 
     // Start the timer after the Assignment Ada text is skipped
-    if (!current.isMissionText && old.isMissionText && vars.characters[current.character] == "Ada" && (current.room == 288 || current.room == 1029) && settings["AssignmentAdaSplits"])
+    if (settings["AssignmentAdaSplits"] && !current.isMissionText && old.isMissionText && vars.characters[current.character] == "Ada" && (current.room == 288 || current.room == 1029))
     {
         vars.gameMode = vars.gameModes["AA"];
         return true;
