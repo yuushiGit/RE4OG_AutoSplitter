@@ -176,11 +176,19 @@ init
             break;
     }
 
+    // ------------------------------------ Functions ------------------------------------
+
     // Convert room IDs to short and create a tuple
     Func<int, int, Tuple<short, short>> createRoomIDsTuple = (room1, room2) =>
     {
         return Tuple.Create((short)room1, (short)room2);
     };
+
+    // Calculation of Hit Ratio
+    vars.calcHitRatio = (Func<short, short, double>)((shotsHit, shots) =>
+    {
+        return shotsHit > 0 ? Math.Round(((double)shotsHit / shots) * 100) : 0;
+    });
 
     // Update the text component
     vars.updateTextComponent = (Func<string, dynamic>)((text) =>
@@ -201,11 +209,35 @@ init
         return textComponent.Settings;
     });
 
-    // Retime Game TIme
+    // Retime Game Time
     vars.retimeGameTime = (Action<TimeSpan, TimeSpan>)((gameTime, timesave) =>
     {
         timer.SetGameTime(gameTime - timesave);
     });
+
+    // Initialize the variables when the timer is start or reset
+    vars.resetVariables = (Action)(() =>
+    {
+        vars.gameTime = new TimeSpan();                           // Game Time
+        vars.completedDoors = new HashSet<Tuple<short, short>>(); // Store the rooms passed
+        vars.playedCutscenes = new HashSet<string>();             // Store the cutscenes played
+        vars.obtainedKeyItems = new HashSet<string>();            // Store the key items obtained
+        vars.obtainedPlagaSamples = new HashSet<long>();          // Store the plaga samples obtained
+        vars.elapsedFrames = 0;                                   // Frames elapsed with load removed
+        vars.roomPauseCount = 0;                                  // Pauses done in room
+        vars.totalPauseCount = 0;                                 // Pauses done in total
+        vars.chapterInvCount = 0;                                 // Inventories opened in chapter
+        vars.totalInvCount = 0;                                   // Inventories opened in total
+        vars.inventoryTime = new Stopwatch();                     // Inventory Time
+
+        // Debug
+        vars.doorLoadsTime = new Stopwatch();
+        vars.optionsTime = new Stopwatch();
+    });
+
+    // ------------------------------------ Functions ------------------------------------
+
+    // ------------------------------------ Global variables ------------------------------------
 
     // Create the TimerModel
     vars.timerModel = new TimerModel { CurrentState = timer };
@@ -276,25 +308,16 @@ init
         createRoomIDsTuple(1303, 1304)  // Chapter 4 End
     };
 
-    // Initialize the variables when the timer is start or reset
-    vars.resetVariables = (Action)(() =>
+    vars.difficultyMaxDA = new Dictionary<byte, Tuple<string, short>>()
     {
-        vars.gameTime = new TimeSpan();                           // Game Time
-        vars.completedDoors = new HashSet<Tuple<short, short>>(); // Store the rooms passed
-        vars.playedCutscenes = new HashSet<string>();             // Store the cutscenes played
-        vars.obtainedKeyItems = new HashSet<string>();            // Store the key items obtained
-        vars.obtainedPlagaSamples = new HashSet<long>();          // Store the plaga samples obtained
-        vars.elapsedFrames = 0;                                   // Frames elapsed with load removed
-        vars.roomPauseCount = 0;                                  // Pauses done in room
-        vars.totalPauseCount = 0;                                 // Pauses done in total
-        vars.chapterInvCount = 0;                                 // Inventories opened in chapter
-        vars.totalInvCount = 0;                                   // Inventories opened in total
-        vars.inventoryTime = new Stopwatch();                     // Inventory Time
+        { 1, Tuple.Create("Amateur", (short)3999) },
+        { 3, Tuple.Create("Easy", (short)5999) },
+        { 5, Tuple.Create("Normal", (short)10999) },
+        { 6, Tuple.Create("Pro", (short)10999) }
+    };
+    
+    // ------------------------------------ Global variables ------------------------------------
 
-        // Debug
-        vars.doorLoadsTime = new Stopwatch();
-        vars.optionsTime = new Stopwatch();
-    });
     vars.resetVariables();
 }
 
@@ -330,6 +353,8 @@ update
 
     // ------------------------------------ When the timer pauses ------------------------------------
 
+    // ------------------------------------ Debug ------------------------------------
+
     // Show time passed on doorloads (Debug)
     var componentDoorLoads = vars.updateTextComponent("Door Loads");
     componentDoorLoads.Text2 = vars.doorLoadsTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
@@ -350,43 +375,20 @@ update
     var componentCategory = vars.updateTextComponent("Category");
     componentCategory.Text2 = vars.category;
 
+    // ------------------------------------ Debug ------------------------------------
+
+    // ------------------------------------ SRT text variables ------------------------------------
+
     // Show DA
     if (settings["ShowDA"] && current.da != old.da)
     {
-        // Initialize DA
-        short maxDA = 10999;
-        double calcDA = 0;
-        string difficultyName = "";
-
-        // Calculation of DA
-        byte difficulty = current.difficulty;
-        switch (difficulty)
-        {
-            case 1:
-                short amateurMaxDA = 3999;
-                calcDA = Math.Floor(current.da / ((double)maxDA / amateurMaxDA));
-                difficultyName = "Amateur";
-                break;
-
-            case 3:
-                short easyMaxDA = 5999;
-                calcDA = Math.Floor(current.da / ((double)maxDA / easyMaxDA));
-                difficultyName = "Easy";
-                break;
-
-            case 5:
-                calcDA = current.da;
-                difficultyName = "Normal";
-                break;
-
-            case 6:
-                calcDA = current.da;
-                difficultyName = "Pro";
-                break;
-        }
+        var difficultyNameAndMaxDA = vars.difficultyMaxDA[current.difficulty];
+        string difficultyName = difficultyNameAndMaxDA.Item1;
+        short maxDA = difficultyNameAndMaxDA.Item2;
+        double computedDA = Math.Floor(current.da / ((double)10999 / maxDA));
 
         var componentDA = vars.updateTextComponent("DA");
-        componentDA.Text2 = string.Format("{0} ({1})", calcDA, difficultyName);
+        componentDA.Text2 = string.Format("{0} ({1})", computedDA, difficultyName);
     }
 
     // Show Health
@@ -406,14 +408,8 @@ update
     // Show Hit Ratio
     if (settings["ShowHitRatio"] && current.chapterShots != old.chapterShots)
     {
-        // Calculation of Hit Ratio
-        Func<short, short, double> calcHitRatio = (shotsHit, shots) =>
-        {
-            return shotsHit > 0 ? Math.Round(((double)shotsHit / shots) * 100) : 0;
-        };
-
-        double chapterHitRatio = calcHitRatio(current.chapterShotsHit, current.chapterShots);
-        double totalHitRatio = calcHitRatio(current.totalShotsHit, current.totalShots);
+        double chapterHitRatio = vars.calcHitRatio(current.chapterShotsHit, current.chapterShots);
+        double totalHitRatio = vars.calcHitRatio(current.totalShotsHit, current.totalShots);
 
         var componentHitRatio = vars.updateTextComponent("Hit Ratio");
         componentHitRatio.Text2 = string.Format("Total: {0}% Chapter: {1}%", totalHitRatio, chapterHitRatio);
@@ -510,6 +506,8 @@ update
             componentPauseCount.Text2 = string.Format("Total: {0} Room: {1}", vars.totalPauseCount, vars.roomPauseCount);
         }
     }
+
+    // ------------------------------------ SRT text variables ------------------------------------
 }
 
 onStart
@@ -520,7 +518,7 @@ onStart
 
 start
 {
-    // Start the timer after the Main Game's costume is selected
+    // Start the timer after the Main Game's FMV is skipped
     if (settings["MainGameSplits"] && current.room == 256 && old.room == 288 && vars.characters[current.character] == "Leon")
     {
         vars.gameMode = vars.gameModes["MG"];
