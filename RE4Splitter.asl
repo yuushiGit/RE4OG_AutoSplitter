@@ -12,19 +12,10 @@ state("bio4", "1.1.0")
     byte item             : 0x858EE4;
     short room            : 0x85A788;
     uint igt              : 0x85F704;
-    bool isEndOfChapter   : 0x867BA1;
-    bool isQTE            : 0x863A58;
-    bool isText           : 0x806F39;
-    bool isPickupItem     : 0x867C12;
 
     // Cutscenes
     string7 movie         : 0x86CE8C;
     string7 cutscene      : 0x803C6E;
-    bool isMovie          : 0x86CD44;
-    bool isCutscene       : 0x803C5F;
-    bool isMiniCutscene   : 0x867C0D;
-    bool isEvent          : 0x867C0A;
-    bool isRadioCall      : 0x87AFFB;
 
     // Loadings
     byte screenState      : 0x85A780;
@@ -63,19 +54,10 @@ state("bio4", "1.0.6")
     byte item             : 0x855664;
     short room            : 0x856F08;
     uint igt              : 0x85BE84;
-    bool isEndOfChapter   : 0x864311;
-    bool isQTE            : 0x8601D8;
-    bool isText           : 0x805F39;
-    bool isPickupItem     : 0x864382;
 
     // Cutscenes
     string7 movie         : 0x8695FC;
     string7 cutscene      : 0x802C6E;
-    bool isMovie          : 0x8694B4;
-    bool isCutscene       : 0x802C5F;
-    bool isMiniCutscene   : 0x86437D;
-    bool isEvent          : 0x86437A;
-    bool isRadioCall      : 0x87777B;
 
     // Loadings
     byte screenState      : 0x856F00;
@@ -114,19 +96,10 @@ state("bio4", "1.0.6 (Japan)")
     byte item             : 0x855664;
     short room            : 0x856F08;
     uint igt              : 0x85BE84;
-    bool isEndOfChapter   : 0x864311;
-    bool isQTE            : 0x8601D8;
-    bool isText           : 0x805F39;
-    bool isPickupItem     : 0x864382;
 
     // Cutscenes
     string7 movie         : 0x8695FC;
     string7 cutscene      : 0x802C6E;
-    bool isMovie          : 0x8694B4;
-    bool isCutscene       : 0x802C5F;
-    bool isMiniCutscene   : 0x86437D;
-    bool isEvent          : 0x86437A;
-    bool isRadioCall      : 0x87777B;
 
     // Loadings
     byte screenState      : 0x856F00;
@@ -313,12 +286,8 @@ update
     // Tutorials (2nd room of 1-1 and last room of 2-1)
     bool isTutorials = current.menuType == 64 && (current.room == 257 || current.room == 279);
 
-    // Cutscenes 
-    bool isCutscenes = current.isEvent && !current.isMovie && !current.isCutscene && !current.isMiniCutscene && !current.isRadioCall && !current.isEndOfChapter && !current.isText && !current.isPickupItem && current.menuType == 0;
-    bool isKrauserCutscene = current.isCutscene && !current.isQTE && current.room == 791;
-
     // Add frames only if we're not in any of these situations
-    if (!isDoorLoads && !isOptions && !isTutorials && !isKrauserCutscene)
+    if (!isDoorLoads && !isOptions && !isTutorials)
     {
         vars.elapsedFrames += current.totalFrames - old.totalFrames;
     }
@@ -335,13 +304,7 @@ update
     var componentOptions = vars.updateTextComponent("Options");
     componentOptions.Text2 = vars.optionsTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
     if (isOptions) vars.optionsTime.Start();
-    else vars.optionsTime.Stop();    
-
-    // Cutscenes Debug Timer
-    var componentCutscenes = vars.updateTextComponent("Cutscenes");
-    componentCutscenes.Text2 = vars.cutscenesTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
-    if (isCutscenes || isKrauserCutscene) vars.cutscenesTime.Start();
-    else vars.cutscenesTime.Stop();
+    else vars.optionsTime.Stop();
 
     // Show Frames (Debug)
     var componentFrames = vars.updateTextComponent("Frames");
