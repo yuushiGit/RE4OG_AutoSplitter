@@ -210,11 +210,26 @@ init
         { "AA", "Assignment Ada" }
     };
 
+    // Categories
+    vars.categories = new Dictionary<string, string>()
+    {
+        { "Idle", "Idle" },
+        { "NG", "New Game" },
+        { "NG+", "New Game+" },
+        { "NM", "No Merchant" }
+    };
+
     // Current Game Mode
     vars.gameMode = vars.gameModes["Idle"];
 
     // Characters
     vars.characters = new string[] { "Leon", "Ashley", "Ada", "Hunk", "Krauser", "Wesker" };
+
+    // Current Game Mode
+    vars.gameMode = vars.gameModes["Idle"];
+
+    // Current Category
+    vars.category = vars.categories["Idle"];
 
     // Store the room IDs that are not split
     vars.unsplittedDoors = new HashSet<Tuple<short, short>>()
@@ -256,13 +271,12 @@ init
         vars.chapterInvCount = 0;                                 // Inventories opened in chapter
         vars.totalInvCount = 0;                                   // Inventories opened in total
         vars.inventoryTime = new Stopwatch();                     // Inventory Time
-        vars.roomPauseCount = 0;                               // Pauses done in room
+        vars.roomPauseCount = 0;                                  // Pauses done in room
         vars.totalPauseCount = 0;                                 // Pauses done in total
 
         // Debug
         vars.doorLoadsTime = new Stopwatch();
         vars.optionsTime = new Stopwatch();
-        vars.cutscenesTime = new Stopwatch();
     });
     vars.resetVariables();
 }
@@ -273,6 +287,11 @@ update
     if (version == "Unknown")
     {
         return false;
+    }
+
+    // If you buy something at the merchant even once, set the category to New Game
+    if (vars.category == vars.categories["NM"] && current.menuType == 16 && current.money < old.money) {
+        vars.category = vars.categories["NG"];
     }
 
     // ------------------------------------ When the timer pauses ------------------------------------
@@ -294,13 +313,13 @@ update
 
     // ------------------------------------ When the timer pauses ------------------------------------
 
-    // Door Loads Debug Timer
+    // Show time passed on doorloads (Debug)
     var componentDoorLoads = vars.updateTextComponent("Door Loads");
     componentDoorLoads.Text2 = vars.doorLoadsTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
     if (isDoorLoads) vars.doorLoadsTime.Start();
     else vars.doorLoadsTime.Stop();
 
-    // Options Debug Timer
+    // Show time spent on options (Debug)
     var componentOptions = vars.updateTextComponent("Options");
     componentOptions.Text2 = vars.optionsTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
     if (isOptions) vars.optionsTime.Start();
@@ -309,6 +328,10 @@ update
     // Show Frames (Debug)
     var componentFrames = vars.updateTextComponent("Frames");
     componentFrames.Text2 = vars.elapsedFrames.ToString();
+
+    // Show Categories (Debug)
+    var componentCategory = vars.updateTextComponent("Category");
+    componentCategory.Text2 = vars.category;
 
     // Show DA
     if (settings["ShowDA"] && current.da != old.da)
@@ -484,6 +507,7 @@ start
     if (settings["MainGameSplits"] && current.room == 256 && old.room == 288 && vars.characters[current.character] == "Leon")
     {
         vars.gameMode = vars.gameModes["MG"];
+        vars.category = current.gameRound > 0 ? vars.categories["NG+"] : vars.categories["NM"];
         return true;
     }
 
