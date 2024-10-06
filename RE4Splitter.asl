@@ -210,15 +210,16 @@ init
     });
 
     // Retime Game Time
-    vars.retimeGameTime = (Action<TimeSpan, TimeSpan>)((gameTime, timesave) =>
+    vars.retimeGameTime = (Action<TimeSpan>)((timesave) =>
     {
-        timer.SetGameTime(gameTime - timesave);
+        timer.SetGameTime(vars.gameTime - timesave);
     });
 
     // Initialize the variables when the timer is start or reset
     vars.resetVariables = (Action)(() =>
     {
         vars.gameTime = new TimeSpan();                           // Game Time
+        vars.timesave = new TimeSpan();                           // Timesave
         vars.completedDoors = new HashSet<Tuple<short, short>>(); // Store the rooms passed
         vars.playedCutscenes = new HashSet<string>();             // Store the cutscenes played
         vars.obtainedKeyItems = new HashSet<string>();            // Store the key items obtained
@@ -305,7 +306,10 @@ init
         createRoomIDsTuple(1283, 1286), // Chapter 1 End
         createRoomIDsTuple(1289, 1294), // Chapter 2 End
         createRoomIDsTuple(1292, 1298), // Chapter 3 End
-        createRoomIDsTuple(1303, 1304)  // Chapter 4 End
+        createRoomIDsTuple(1303, 1304), // Chapter 4 End
+
+        // Assignment Ada
+        createRoomIDsTuple(288, 1029) // AA Start
     };
 
     vars.difficultyMaxDA = new Dictionary<byte, Tuple<string, short>>()
@@ -315,7 +319,7 @@ init
         { 5, Tuple.Create("Normal", (short)10999) },
         { 6, Tuple.Create("Pro", (short)10999) }
     };
-    
+
     // ------------------------------------ Global variables ------------------------------------
 
     vars.resetVariables();
@@ -534,7 +538,7 @@ start
     }
 
     // Start the timer after the Assignment Ada text is skipped
-    if (settings["AssignmentAdaSplits"] && !current.isMissionText && old.isMissionText && vars.characters[current.character] == "Ada" && (current.room == 288 || current.room == 1029))
+    if (settings["AssignmentAdaSplits"] && !current.isMissionText && old.isMissionText && vars.characters[current.character] == "Ada" && current.room == 288)
     {
         vars.gameMode = vars.gameModes["AA"];
         return true;
@@ -600,21 +604,21 @@ split
     // Main Game Ending
     if (current.movie != old.movie && movieId == "819ng." && vars.gameMode == vars.gameModes["MG"])
     {
-        vars.retimeGameTime(vars.gameTime, vars.timesavesNeeded[vars.category]);
+        vars.retimeGameTime(vars.timesavesNeeded[vars.category]);
         return true;
     }
 
     // Separate Ways Ending
     if (current.movie != old.movie && movieId == "1310s10" && vars.gameMode == vars.gameModes["SW"])
     {
-        vars.retimeGameTime(vars.gameTime, vars.timesavesNeeded[vars.gameMode]);
+        vars.retimeGameTime(vars.timesavesNeeded[vars.gameMode]);
         return true;
     }
 
     // Assignment Ada Ending
     if (current.cutscene != old.cutscene && cutsceneId == "1038s00" && vars.gameMode == vars.gameModes["AA"])
     {
-        vars.retimeGameTime(vars.gameTime, vars.timesavesNeeded[vars.gameMode]);
+        vars.retimeGameTime(vars.timesavesNeeded[vars.gameMode]);
         return true;
     }
     return false;
