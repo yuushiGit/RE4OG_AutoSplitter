@@ -212,7 +212,9 @@ init
     // Retime Game Time
     vars.retimeGameTime = (Action<TimeSpan>)((timesave) =>
     {
-        timer.SetGameTime(vars.gameTime - timesave);
+        var componentRetime = vars.updateTextComponent("Retimed LRT");
+        var time = vars.gameTime - timesave;
+        componentRetime.Text2 = time.ToString("hh\\:mm\\:ss\\.ff");
     });
 
     // Initialize the variables when the timer is start or reset
