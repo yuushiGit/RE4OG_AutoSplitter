@@ -10,7 +10,6 @@ state("bio4", "1.1.0")
     byte character        : 0x85F728;
     byte chapter          : 0x85F6FA;
     byte item             : 0x858EE4;
-    byte gameRound        : 0x85F6FE;
     short room            : 0x85A788;
     uint igt              : 0x85F704;
 
@@ -53,7 +52,6 @@ state("bio4", "1.0.6")
     byte character        : 0x85BEA8;
     byte chapter          : 0x85BE7A;
     byte item             : 0x855664;
-    byte gameRound        : 0x85BE7E;
     short room            : 0x856F08;
     uint igt              : 0x85BE84;
 
@@ -96,7 +94,6 @@ state("bio4", "1.0.6 (Japan)")
     byte character        : 0x85BEA8;
     byte chapter          : 0x85BE7A;
     byte item             : 0x855664;
-    byte gameRound        : 0x85BE7E;
     short room            : 0x856F08;
     uint igt              : 0x85BE84;
 
@@ -209,19 +206,9 @@ init
         return textComponent.Settings;
     });
 
-    // Retime Game Time
-    vars.retimeGameTime = (Action<TimeSpan>)((timesave) =>
-    {
-        var componentRetime = vars.updateTextComponent("Retimed LRT");
-        var time = vars.gameTime - timesave;
-        componentRetime.Text2 = time.ToString("hh\\:mm\\:ss\\.ff");
-    });
-
     // Initialize the variables when the timer is start or reset
     vars.resetVariables = (Action)(() =>
     {
-        vars.gameTime = new TimeSpan();                           // Game Time
-        vars.timesave = new TimeSpan();                           // Timesave
         vars.completedDoors = new HashSet<Tuple<short, short>>(); // Store the rooms passed
         vars.playedCutscenes = new HashSet<string>();             // Store the cutscenes played
         vars.obtainedKeyItems = new HashSet<string>();            // Store the key items obtained
@@ -254,33 +241,11 @@ init
         { "AA", "Assignment Ada" }
     };
 
-    // Categories
-    vars.categories = new Dictionary<string, string>()
-    {
-        { "Idle", "Idle" },
-        { "NG", "New Game" },
-        { "NG+", "New Game+" },
-        { "NM", "No Merchant" }
-    };
-
-    // Timesaves
-    vars.timesavesNeeded = new Dictionary<string, TimeSpan>()
-    {
-        { "New Game", (TimeSpan.FromMinutes(4) + TimeSpan.FromSeconds(30)) },
-        { "New Game+", TimeSpan.FromMinutes(5) },
-        { "No Merchant", TimeSpan.FromMinutes(3) },
-        { "Separate Ways", TimeSpan.FromSeconds(12) },
-        { "Assignment Ada", TimeSpan.FromSeconds(3) }
-    };
-
     // Characters
     vars.characters = new string[] { "Leon", "Ashley", "Ada", "Hunk", "Krauser", "Wesker" };
 
     // Current Game Mode
     vars.gameMode = vars.gameModes["Idle"];
-
-    // Current Category
-    vars.category = vars.categories["Idle"];
 
     // Store the room IDs that are not split
     vars.unsplittedDoors = new HashSet<Tuple<short, short>>()
@@ -335,11 +300,6 @@ update
         return false;
     }
 
-    // If you buy something at the merchant even once, set the category to New Game
-    if (vars.category == vars.categories["NM"] && current.menuType == 16 && current.money < old.money) {
-        vars.category = vars.categories["NG"];
-    }
-
     // ------------------------------------ When the timer pauses ------------------------------------
 
     // Door Loads
@@ -376,10 +336,6 @@ update
     // Show Frames (Debug)
     var componentFrames = vars.updateTextComponent("Frames");
     componentFrames.Text2 = vars.elapsedFrames.ToString();
-
-    // Show Categories (Debug)
-    var componentCategory = vars.updateTextComponent("Category");
-    componentCategory.Text2 = vars.category;
 
     // ------------------------------------ Debug ------------------------------------
 
@@ -528,7 +484,6 @@ start
     if (settings["MainGameSplits"] && current.room == 256 && old.room == 288 && vars.characters[current.character] == "Leon")
     {
         vars.gameMode = vars.gameModes["MG"];
-        vars.category = current.gameRound > 0 ? vars.categories["NG+"] : vars.categories["NM"];
         return true;
     }
 
@@ -606,21 +561,18 @@ split
     // Main Game Ending
     if (current.movie != old.movie && movieId == "819ng." && vars.gameMode == vars.gameModes["MG"])
     {
-        vars.retimeGameTime(vars.timesavesNeeded[vars.category]);
         return true;
     }
 
     // Separate Ways Ending
     if (current.movie != old.movie && movieId == "1310s10" && vars.gameMode == vars.gameModes["SW"])
     {
-        vars.retimeGameTime(vars.timesavesNeeded[vars.gameMode]);
         return true;
     }
 
     // Assignment Ada Ending
     if (current.cutscene != old.cutscene && cutsceneId == "1038s00" && vars.gameMode == vars.gameModes["AA"])
     {
-        vars.retimeGameTime(vars.timesavesNeeded[vars.gameMode]);
         return true;
     }
     return false;
@@ -634,8 +586,7 @@ isLoading
 gameTime
 {
     // Synchronize the timer with LRT
-    vars.gameTime = TimeSpan.FromSeconds((double)vars.elapsedFrames / current.frameRate);
-    return vars.gameTime;
+    return TimeSpan.FromSeconds((double)vars.elapsedFrames / current.frameRate);
 }
 
 onReset

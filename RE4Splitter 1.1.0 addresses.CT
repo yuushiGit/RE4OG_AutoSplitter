@@ -69,34 +69,6 @@
           <VariableType>4 Bytes</VariableType>
           <Address>bio4.exe+85F704</Address>
         </CheatEntry>
-        <CheatEntry>
-          <ID>42</ID>
-          <Description>"isEndOfChapter"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>Byte</VariableType>
-          <Address>bio4.exe+867BA1</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>44</ID>
-          <Description>"isQTE"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>Byte</VariableType>
-          <Address>bio4.exe+863A58</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>11</ID>
-          <Description>"isText"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>Byte</VariableType>
-          <Address>bio4.exe+806F39</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>47</ID>
-          <Description>"isPickupItem"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>Byte</VariableType>
-          <Address>bio4.exe+867C12</Address>
-        </CheatEntry>
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
@@ -125,41 +97,6 @@
           <CodePage>0</CodePage>
           <ZeroTerminate>1</ZeroTerminate>
           <Address>bio4.exe+803C6E</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>23</ID>
-          <Description>"isMovie"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>Byte</VariableType>
-          <Address>bio4.exe+86CD44</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>37</ID>
-          <Description>"isCutscene"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>Byte</VariableType>
-          <Address>bio4.exe+803C5F</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>22</ID>
-          <Description>"isMiniCutscene"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>Byte</VariableType>
-          <Address>bio4.exe+867C0D</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>43</ID>
-          <Description>"isEvent"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>Byte</VariableType>
-          <Address>bio4.exe+867C0A</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>41</ID>
-          <Description>"isRadioCall"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>Byte</VariableType>
-          <Address>bio4.exe+87AFFB</Address>
         </CheatEntry>
       </CheatEntries>
     </CheatEntry>
@@ -195,6 +132,13 @@
           <ShowAsSigned>1</ShowAsSigned>
           <VariableType>8 Bytes</VariableType>
           <Address>bio4.exe+85F9EC</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>64</ID>
+          <Description>"isMissionText"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Byte</VariableType>
+          <Address>bio4.exe+817840</Address>
         </CheatEntry>
       </CheatEntries>
     </CheatEntry>
