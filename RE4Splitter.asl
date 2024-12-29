@@ -216,6 +216,7 @@ init
         vars.elapsedFrames = 0;                                   // Frames elapsed with load removed
         vars.roomPauseCount = 0;                                  // Pauses done in room
         vars.totalPauseCount = 0;                                 // Pauses done in total
+        vars.pauseBuffers = 0;
         vars.chapterInvCount = 0;                                 // Inventories opened in chapter
         vars.totalInvCount = 0;                                   // Inventories opened in total
         vars.inventoryTime = new Stopwatch();                     // Inventory Time
@@ -223,6 +224,7 @@ init
         // Debug
         vars.doorLoadsTime = new Stopwatch();
         vars.optionsTime = new Stopwatch();
+        vars.gameplayTime = new Stopwatch();
     });
 
     // ------------------------------------ Functions ------------------------------------
@@ -300,18 +302,50 @@ update
         return false;
     }
 
+    vars.gameplayTime.Start();
+
+    var componentVersion = vars.updateTextComponent("Test Version");
+
     // ------------------------------------ When the timer pauses ------------------------------------
 
     // Door Loads
     bool isDoorLoads = current.screenState != 3 && current.screenState != 6;
 
-    // Options
-    bool isOptions = current.screenState == 6;
-
     // Tutorials (2nd room of 1-1 and last room of 2-1)
     bool isTutorials = current.menuType == 64 && (current.room == 257 || current.room == 279);
 
+    var componentPauseBuffers = vars.updateTextComponent("Pause Buffer Count");
+
+    bool isPauseBuffer = false;
+
+    if (current.screenState == 6 && old.screenState != 6) {
+        vars.gameplayTime.Stop();
+        if (vars.gameplayTime.Elapsed < TimeSpan.FromSeconds(2)) {
+            isPauseBuffer = true;
+        }
+    }
+    else {
+        if (current.screenState != 6 && old.screenState == 6) {
+            vars.gameplayTime.Restart();
+        }
+    }
+
+    if (isPauseBuffer || (current.igt == 0 && old.igt > 0)) {
+        if (current.igt == 0 && old.igt > 0) {
+            vars.pauseBuffers = 0;
+        }
+        else {
+            vars.pauseBuffers++;
+        }
+        componentPauseBuffers.Text2 = string.Format("{0}", vars.pauseBuffers);
+    }
+
+    //var componentGameplay = vars.updateTextComponent("Gameplay");
+    //componentGameplay.Text2 = vars.gameplayTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
+
     // Add frames only if we're not in any of these situations
+    bool isOptions = current.screenState == 6;
+
     if (!isDoorLoads && !isOptions && !isTutorials)
     {
         vars.elapsedFrames += current.totalFrames - old.totalFrames;
@@ -364,7 +398,7 @@ update
     if (settings["ShowMoney"] && current.money != old.money)
     {
         var componentMoney = vars.updateTextComponent("Money");
-        componentMoney.Text2 = string.Format("{0} PTAS", current.money);
+        componentMoney.Text2 = string.Format("{0} PESETAS", current.money);
     }
 
     // Show Hit Ratio
@@ -461,6 +495,11 @@ update
         {
             vars.roomPauseCount = 0;
         }
+
+        if (current.igt == 0 && old.igt > 0) {
+            vars.totalPauseCount = 0;
+        }
+
 
         if (vars.roomPauseCount != prevRoomPauseCount)
         {
