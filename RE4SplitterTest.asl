@@ -223,6 +223,8 @@ init
         vars.doorLoadsTime = new Stopwatch();
         vars.optionsTime = new Stopwatch();
         vars.gameplayTime = new Stopwatch();
+
+        vars.runFinished = false;
     });
 
     // ------------------------------------ Functions ------------------------------------
@@ -303,7 +305,7 @@ update
     // ------------------------------------ When the timer pauses ------------------------------------
 
     // Door Loads
-    bool isDoorLoads = current.screenState != 3 && current.screenState != 6;
+    bool isDoorLoads = current.screenState != 3 && current.screenState != 6 && current.room != 288;
 
     bool isOptions = current.screenState == 6;
 
@@ -334,7 +336,9 @@ update
 
     // Show Frames
     var componentFrames = vars.updateTextComponent("Frames");
-    componentFrames.Text2 = vars.elapsedFrames.ToString();
+    if (!vars.runFinished && current.room != 288) {
+        componentFrames.Text2 = vars.elapsedFrames.ToString();
+    }
 
     // ------------------------------------ Debug ------------------------------------
 
@@ -564,18 +568,21 @@ split
     // Main Game Ending
     if (current.movie != old.movie && movieId == "819ng." && vars.gameMode == vars.gameModes["MG"])
     {
+        vars.runFinished = true;
         return true;
     }
 
     // Separate Ways Ending
     if (current.movie != old.movie && movieId == "1310s10" && vars.gameMode == vars.gameModes["SW"])
     {
+        vars.runFinished = true;
         return true;
     }
 
     // Assignment Ada Ending
     if (current.cutscene != old.cutscene && cutsceneId == "1038s00" && vars.gameMode == vars.gameModes["AA"])
     {
+        vars.runFinished = true;
         return true;
     }
     return false;
