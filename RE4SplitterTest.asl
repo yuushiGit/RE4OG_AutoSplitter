@@ -311,7 +311,7 @@ update
 
     // Tutorials (2nd room of 1-1 and last room of 2-1)
     bool isTutorials = current.menuType == 64 && (current.room == 257 || current.room == 279);
-    
+
     // Add frames only if we're not in any of these situations
     if (!isDoorLoads && !isOptions && !isTutorials)
     {
@@ -336,7 +336,8 @@ update
 
     // Show Frames
     var componentFrames = vars.updateTextComponent("Frames");
-    if (!vars.runFinished && current.room != 288) {
+    if (!vars.runFinished && current.room != 288)
+    {
         componentFrames.Text2 = vars.elapsedFrames.ToString();
     }
 
@@ -345,7 +346,7 @@ update
     // ------------------------------------ SRT text variables ------------------------------------
 
     var componentVersion = vars.updateTextComponent("Test Version");
-    
+
     // Show Pause Count
 
     // Check to see if the options menu is opened
@@ -360,19 +361,24 @@ update
 
     vars.gameplayTime.Start();
     bool isPauseBuffer = false;
-    if (current.screenState == 6 && old.screenState != 6) {
+    if (current.screenState == 6 && old.screenState != 6)
+    {
         vars.gameplayTime.Stop();
-        if (vars.gameplayTime.Elapsed < TimeSpan.FromSeconds(2)) {
+        if (vars.gameplayTime.Elapsed < TimeSpan.FromSeconds(2))
+        {
             isPauseBuffer = true;
         }
     }
-    else {
-        if (current.screenState != 6 && old.screenState == 6) {
+    else
+    {
+        if (current.screenState != 6 && old.screenState == 6)
+        {
             vars.gameplayTime.Restart();
         }
     }
 
-    if (isPauseBuffer) {
+    if (isPauseBuffer)
+    {
         vars.totalPauseBufferCount++;
         var componentPauseBuffers = vars.updateTextComponent("Pause Buffer Count");
         componentPauseBuffers.Text2 = string.Format("Total: {0}", vars.totalPauseBufferCount);
@@ -495,14 +501,14 @@ start
     }
 
     // Start the timer after the Separate Ways map is skipped
-    if (settings["SeparateWaysSplits"] && current.menuType == 0 && old.menuType == 2 && vars.characters[current.character] == "Ada" && current.room == 1280)
+    if (settings["SeparateWaysSplits"] && current.menuType == 0 && old.menuType == 2 && vars.characters[current.character] == "Ada" && current.room == 1280 && current.da == 3500)
     {
         vars.gameMode = vars.gameModes["SW"];
         return true;
     }
 
     // Start the timer after the Assignment Ada text is skipped
-    if (settings["AssignmentAdaSplits"] && !current.isMissionText && old.isMissionText && vars.characters[current.character] == "Ada" && current.room == 288)
+    if (settings["AssignmentAdaSplits"] && !current.isMissionText && old.isMissionText && vars.characters[current.character] == "Ada" && current.room == 288 && current.da == 4500)
     {
         vars.gameMode = vars.gameModes["AA"];
         return true;
@@ -559,8 +565,8 @@ split
         return true;
     }
 
-    // Split at the bridge door after reunited with Ashley (for No Merchant)
-    if (current.room == 518 && old.room == 527 && current.chapter == 10 && vars.gameMode == vars.gameModes["MG"] && settings["DoorSplits"])
+    // Split at the door you go through to get the Broken Butterfly (for No Merchant)
+    if ((current.room == 527 && old.room == 524) || (current.room == 518 && old.room == 527) && current.chapter == 10 && vars.gameMode == vars.gameModes["MG"] && settings["DoorSplits"])
     {
         return true;
     }
