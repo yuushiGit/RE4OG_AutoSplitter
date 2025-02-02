@@ -266,6 +266,7 @@ init
         createRoomIDsTuple(288, 256), // Main Menu → Footpath to the Village
         createRoomIDsTuple(519, 514), // Barracks → Castle Wall
         createRoomIDsTuple(536, 533), // Gatekeeper Hallway → Lord's Room
+        createRoomIDsTuple(554, 552), // Pier → Tower Summit
         createRoomIDsTuple(555, 544), // Prophet's Room (Cutscene) → Area before the Mine
         createRoomIDsTuple(790, 778), // Machine Room Entry → Communications Tower (Cutscene)
         createRoomIDsTuple(778, 790), // Communications Tower (Cutscene) → Machine Room Entry
