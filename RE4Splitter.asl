@@ -1,3 +1,9 @@
+// Official Resident Evil 4 UHD (Steam) Autosplitter and Load Remover Timer (LRT). 
+// Developed by Yuushi with help from Sawken.
+// Special thanks to Wipe, Mysterion and Pitted for their work on previous autosplitters of this game which has served as inspiration for this one!
+// Special thanks to all the runners who helped by testing the different iterations of this .asl!
+// Version 1.0.0 (last modified February 9th, 2025).
+
 // Version 1.1.0 (Latest)
 state("bio4", "1.1.0")
 {
@@ -479,7 +485,7 @@ start
 split
 {
     // Door Splits
-    if (current.room != old.room && vars.gameMode != vars.gameModes["Idle"] && settings["DoorSplits"])
+    if (settings["DoorSplits"] && current.room != old.room && vars.gameMode != vars.gameModes["Idle"])
     {
         // Split if the unsplitted doors or completed doors doesn't contains the old and current room IDs
         if (!vars.unsplittedDoors.Contains(Tuple.Create(old.room, current.room)) && !vars.completedDoors.Contains(Tuple.Create(old.room, current.room)))
@@ -497,7 +503,10 @@ split
 
     // Key Item Splits
     String itemId = current.room.ToString() + current.item.ToString();
-    if (current.item != old.item && !vars.obtainedKeyItems.Contains(itemId) && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]) && settings[string.Format("Item{0}", itemId)])
+    if (settings[string.Format("Item{0}", itemId)] 
+    && current.item != old.item 
+    && !vars.obtainedKeyItems.Contains(itemId) 
+    && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]))
     {
         vars.obtainedKeyItems.Add(itemId);
         return true;
@@ -505,21 +514,30 @@ split
 
     // Event Splits
     String cutsceneId = current.cutscene != "" ? current.room.ToString() + current.cutscene.Substring(4) : "";
-    if (current.cutscene != old.cutscene && !vars.playedCutscenes.Contains(cutsceneId) && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]) && settings[string.Format("Event{0}", cutsceneId)])
+    if (settings[string.Format("Event{0}", cutsceneId)]
+    && current.cutscene != old.cutscene 
+    && !vars.playedCutscenes.Contains(cutsceneId) 
+    && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]))
     {
         vars.playedCutscenes.Add(cutsceneId);
         return true;
     }
 
     String movieId = current.movie != "" ? current.room.ToString() + current.movie.Substring(4) : "";
-    if (current.movie != old.movie && !vars.playedCutscenes.Contains(movieId) && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]) && settings[string.Format("Event{0}", movieId)])
+    if (settings[string.Format("Event{0}", movieId)]
+    && current.movie != old.movie 
+    && !vars.playedCutscenes.Contains(movieId) 
+    && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]))
     {
         vars.playedCutscenes.Add(movieId);
         return true;
     }
 
     // Plaga Sample Splits
-    if (current.sample > old.sample && !vars.obtainedPlagaSamples.Contains(current.sample) && vars.gameMode == vars.gameModes["AA"] && settings[string.Format("Sample{0}", vars.obtainedPlagaSamples.Count + 1)])
+    if (settings[string.Format("Sample{0}", vars.obtainedPlagaSamples.Count + 1)] 
+    && current.sample > old.sample 
+    && !vars.obtainedPlagaSamples.Contains(current.sample) 
+    && vars.gameMode == vars.gameModes["AA"])
     {
         vars.obtainedPlagaSamples.Add(current.sample);
         return true;
@@ -532,19 +550,19 @@ split
     }
 
     // Main Game Ending
-    if (current.movie != old.movie && movieId == "819ng." && vars.gameMode == vars.gameModes["MG"])
+    if (vars.gameMode == vars.gameModes["MG"] && current.movie != old.movie && movieId == "819ng.")
     {
         return true;
     }
 
     // Separate Ways Ending
-    if (current.movie != old.movie && movieId == "1310s10" && vars.gameMode == vars.gameModes["SW"])
+    if (vars.gameMode == vars.gameModes["SW"] && current.movie != old.movie && movieId == "1310s10")
     {
         return true;
     }
 
     // Assignment Ada Ending
-    if (current.cutscene != old.cutscene && cutsceneId == "1038s00" && vars.gameMode == vars.gameModes["AA"])
+    if (vars.gameMode == vars.gameModes["AA"] && current.cutscene != old.cutscene && cutsceneId == "1038s00")
     {
         return true;
     }
