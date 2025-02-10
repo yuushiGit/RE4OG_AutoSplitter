@@ -29,14 +29,8 @@ state("bio4", "1.1.0")
     byte difficulty       : 0x862BDC;
     short da              : 0x85F6F4;
     short health          : 0x85F714;
-    short chapterShots    : 0x862BD4;
-    short totalShots      : 0x862BD8;
-    short chapterShotsHit : 0x862BCC;
-    short totalShotsHit   : 0x862BD0;
     short chapterKills    : 0x862BC4;
     short totalKills      : 0x862BC8;
-    short chapterDeaths   : 0x862BC0;
-    short totalDeaths     : 0x862BC2;
     uint money            : 0x85F708;
 }
 
@@ -71,14 +65,8 @@ state("bio4", "1.0.6")
     byte difficulty       : 0x85F35C;
     short da              : 0x85BE74;
     short health          : 0x85BE94;
-    short chapterShots    : 0x85F354;
-    short totalShots      : 0x85F358;
-    short chapterShotsHit : 0x85F34C;
-    short totalShotsHit   : 0x85F350;
     short chapterKills    : 0x85F344;
     short totalKills      : 0x85F348;
-    short chapterDeaths   : 0x85F340;
-    short totalDeaths     : 0x85F342;
     uint money            : 0x85BE88;
 }
 
@@ -113,14 +101,8 @@ state("bio4", "1.0.6 (Japan)")
     byte difficulty       : 0x85F35C;
     short da              : 0x85BE74;
     short health          : 0x85BE94;
-    short chapterShots    : 0x85F354;
-    short totalShots      : 0x85F358;
-    short chapterShotsHit : 0x85F34C;
-    short totalShotsHit   : 0x85F350;
     short chapterKills    : 0x85F344;
     short totalKills      : 0x85F348;
-    short chapterDeaths   : 0x85F340;
-    short totalDeaths     : 0x85F342;
     uint money            : 0x85BE88;
 }
 
@@ -181,12 +163,6 @@ init
         return Tuple.Create((short)room1, (short)room2);
     };
 
-    // Calculation of Hit Ratio
-    vars.calcHitRatio = (Func<short, short, double>)((shotsHit, shots) =>
-    {
-        return shotsHit > 0 ? Math.Round(((double)shotsHit / shots) * 100) : 0;
-    });
-
     // Update the text component
     vars.updateTextComponent = (Func<string, dynamic>)((text) =>
     {
@@ -214,10 +190,8 @@ init
         vars.obtainedKeyItems = new HashSet<string>();            // Store the key items obtained
         vars.obtainedPlagaSamples = new HashSet<long>();          // Store the plaga samples obtained
         vars.elapsedFrames = 0;                                   // Frames elapsed with load removed
-        vars.roomPauseCount = 0;                                  // Pauses done in room
         vars.totalPauseCount = 0;                                 // Pauses done in total
-        vars.pauseBuffers = 0;                                    // Pause Buffers
-        vars.chapterInvCount = 0;                                 // Inventories opened in chapter
+        vars.totalPauseBufferCount = 0;                           // Pause buffers done in total
         vars.totalInvCount = 0;                                   // Inventories opened in total
         vars.inventoryTime = new Stopwatch();                     // Inventory Time
 
@@ -303,22 +277,29 @@ update
         return false;
     }
 
-    vars.gameplayTime.Start();
-
-    var componentVersion = vars.updateTextComponent("Test Version");
-
     // ------------------------------------ When the timer pauses ------------------------------------
 
     // Door Loads
-    bool isDoorLoads = current.screenState != 3 && current.screenState != 6;
+    bool isDoorLoads = current.screenState != 3 && current.screenState != 6 && current.room != 288;
+
+    bool isOptions = current.screenState == 6;
 
     // Tutorials (2nd room of 1-1 and last room of 2-1)
     bool isTutorials = current.menuType == 64 && (current.room == 257 || current.room == 279);
 
-    var componentPauseBuffers = vars.updateTextComponent("Pause Buffer Count");
+    // Add frames only if we're not in any of these situations
+    if (!isDoorLoads && !isOptions && !isTutorials)
+    {
+        vars.elapsedFrames += current.totalFrames - old.totalFrames;
+    }
 
+    // ------------------------------------ When the timer pauses ------------------------------------
+
+    // ------------------------------------ SRT text variables ------------------------------------
+
+    // Show Pause Buffer Count (always present)
+    vars.gameplayTime.Start();
     bool isPauseBuffer = false;
-
     if (current.screenState == 6 && old.screenState != 6)
     {
         vars.gameplayTime.Stop();
@@ -335,53 +316,33 @@ update
         }
     }
 
-    if (isPauseBuffer || (current.igt == 0 && old.igt > 0))
+    if (isPauseBuffer)
     {
-        if (current.igt == 0 && old.igt > 0)
-        {
-            vars.pauseBuffers = 0;
-        }
-        else
-        {
-            vars.pauseBuffers++;
-        }
-        componentPauseBuffers.Text2 = string.Format("{0}", vars.pauseBuffers);
+        vars.totalPauseBufferCount++;
+        var componentPauseBuffers = vars.updateTextComponent("Pause Buffer Count");
+        componentPauseBuffers.Text2 = string.Format("Total: {0}", vars.totalPauseBufferCount);
     }
 
-    //var componentGameplay = vars.updateTextComponent("Gameplay");
-    //componentGameplay.Text2 = vars.gameplayTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
-
-    // Add frames only if we're not in any of these situations
-    bool isOptions = current.screenState == 6;
-
-    if (!isDoorLoads && !isOptions && !isTutorials)
+    // Show Money
+    if (settings["ShowMoney"] && current.money != old.money)
     {
-        vars.elapsedFrames += current.totalFrames - old.totalFrames;
+        var componentMoney = vars.updateTextComponent("Money");
+        componentMoney.Text2 = string.Format("{0} PESETAS", current.money);
     }
 
-    // ------------------------------------ When the timer pauses ------------------------------------
+    // Show Kills
+    if (settings["ShowKills"] && current.chapterKills != old.chapterKills)
+    {
+        var componentKills = vars.updateTextComponent("Kills");
+        componentKills.Text2 = string.Format("Chapter: {0}", current.chapterKills);
+    }
 
-    // ------------------------------------ Debug ------------------------------------
-
-    // Show time passed on doorloads (Debug)
-    var componentDoorLoads = vars.updateTextComponent("Door Loads");
-    componentDoorLoads.Text2 = vars.doorLoadsTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
-    if (isDoorLoads) vars.doorLoadsTime.Start();
-    else vars.doorLoadsTime.Stop();
-
-    // Show time spent on options (Debug)
-    var componentOptions = vars.updateTextComponent("Options");
-    componentOptions.Text2 = vars.optionsTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
-    if (isOptions) vars.optionsTime.Start();
-    else vars.optionsTime.Stop();
-
-    // Show Frames (Debug)
-    var componentFrames = vars.updateTextComponent("Frames");
-    componentFrames.Text2 = vars.elapsedFrames.ToString();
-
-    // ------------------------------------ Debug ------------------------------------
-
-    // ------------------------------------ SRT text variables ------------------------------------
+    // Show In Game Time
+    if (settings["ShowIGT"] && current.igt != old.igt)
+    {
+        var componentIGT = vars.updateTextComponent("In Game Time");
+        componentIGT.Text2 = TimeSpan.FromSeconds(current.igt).ToString("hh\\:mm\\:ss");
+    }
 
     // Show DA
     if (settings["ShowDA"] && current.da != old.da)
@@ -402,80 +363,32 @@ update
         componentHealth.Text2 = string.Format("{0} ({1})", current.health, vars.characters[current.character]);
     }
 
-    // Show Money
-    if (settings["ShowMoney"] && current.money != old.money)
-    {
-        var componentMoney = vars.updateTextComponent("Money");
-        componentMoney.Text2 = string.Format("{0} PESETAS", current.money);
-    }
-
-    // Show Hit Ratio
-    if (settings["ShowHitRatio"] && current.chapterShots != old.chapterShots)
-    {
-        double chapterHitRatio = vars.calcHitRatio(current.chapterShotsHit, current.chapterShots);
-        double totalHitRatio = vars.calcHitRatio(current.totalShotsHit, current.totalShots);
-
-        var componentHitRatio = vars.updateTextComponent("Hit Ratio");
-        componentHitRatio.Text2 = string.Format("Total: {0}% Chapter: {1}%", totalHitRatio, chapterHitRatio);
-    }
-
-    // Show Kills
-    if (settings["ShowKills"] && current.chapterKills != old.chapterKills)
-    {
-        var componentKills = vars.updateTextComponent("Kills");
-        componentKills.Text2 = string.Format("Total: {0} Chapter: {1}", current.totalKills, current.chapterKills);
-    }
-
-    // Show Deaths
-    if (settings["ShowDeaths"] && current.chapterDeaths != old.chapterDeaths)
-    {
-        var componentDeaths = vars.updateTextComponent("Deaths");
-        componentDeaths.Text2 = string.Format("Total: {0} Chapter: {1}", current.totalDeaths, current.chapterDeaths);
-    }
-
-    // Show In Game Time
-    if (settings["ShowInGameTime"] && current.igt != old.igt)
-    {
-        var componentIGT = vars.updateTextComponent("In Game Time");
-        componentIGT.Text2 = TimeSpan.FromSeconds(current.igt).ToString("hh\\:mm\\:ss");
-    }
-
     // Show Inventory Count
-    if (settings["ShowInventoryCount"])
+    if (settings["ShowInventoryCount"] && ((current.menuType == 1 || current.menuType == 128) && old.menuType == 0))
     {
-        // Store the previous chapter inventory count
-        int prevChapterInvCount = vars.chapterInvCount;
+        vars.totalInvCount++;
+        var componentInvCount = vars.updateTextComponent("Inventory Count");
+        componentInvCount.Text2 = string.Format("Total: {0}", vars.totalInvCount);
+    }
 
-        // Check to see if the inventory is opened
-        if ((current.menuType == 1 || current.menuType == 128) && old.menuType == 0)
-        {
-            vars.totalInvCount++;
-            vars.chapterInvCount++;
-        }
-
-        // Initialize chapter inventory count at the end of chapter
-        if (current.chapter > old.chapter)
-        {
-            vars.chapterInvCount = 0;
-        }
-
-        if (vars.chapterInvCount != prevChapterInvCount)
-        {
-            var componentInvCount = vars.updateTextComponent("Inventory Count");
-            componentInvCount.Text2 = string.Format("Total: {0} Chapter: {1}", vars.totalInvCount, vars.chapterInvCount);
-        }
+    // Show Pause Count
+    if (settings["ShowPauseCount"] && (current.screenState == 6 && old.screenState != 6))
+    {
+        vars.totalPauseCount++;
+        var componentPauseCount = vars.updateTextComponent("Pause Count");
+        componentPauseCount.Text2 = string.Format("Total: {0}", vars.totalPauseCount);
     }
 
     // Show Inventory Time
     if (settings["ShowInventoryTime"] && (current.menuType == 1 || current.menuType == 128))
     {
         var componentInvTime = vars.updateTextComponent("Inventory Time");
-        componentInvTime.Text2 = vars.inventoryTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
+        componentInvTime.Text2 = vars.inventoryTime.Elapsed.ToString("ss\\.fff");
 
         // Start the timer
         if (current.screenTransition < old.screenTransition && old.screenTransition == 2)
         {
-            vars.inventoryTime.Start();
+            vars.inventoryTime.Restart();
         }
 
         // Stop the timer
@@ -485,35 +398,26 @@ update
         }
     }
 
-    // Show Pause Count
-    if (settings["ShowPauseCount"])
-    {
-        // Store the previous room pause count
-        int prevRoomPauseCount = vars.roomPauseCount;
+    // Show time passed on doorloads
+    if (settings["ShowDoorloadsTime"]) {
+        var componentDoorLoads = vars.updateTextComponent("Door Loads");
+        componentDoorLoads.Text2 = vars.doorLoadsTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
+        if (isDoorLoads) vars.doorLoadsTime.Start();
+        else vars.doorLoadsTime.Stop();
+    }
 
-        // Check to see if the options menu is opened
-        if (current.screenState == 6 && old.screenState != 6)
-        {
-            vars.totalPauseCount++;
-            vars.roomPauseCount++;
-        }
+    // Show time spent on options
+    if (settings["ShowOptionsTime"]) {
+        var componentOptions = vars.updateTextComponent("Options");
+        componentOptions.Text2 = vars.optionsTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
+        if (isOptions) vars.optionsTime.Start();
+        else vars.optionsTime.Stop();
+    }
 
-        // Initialize chapter pause count at the end of the room
-        if (current.room != old.room)
-        {
-            vars.roomPauseCount = 0;
-        }
-
-        if (current.igt == 0 && old.igt > 0) {
-            vars.totalPauseCount = 0;
-        }
-
-
-        if (vars.roomPauseCount != prevRoomPauseCount)
-        {
-            var componentPauseCount = vars.updateTextComponent("Pause Count");
-            componentPauseCount.Text2 = string.Format("Total: {0} Room: {1}", vars.totalPauseCount, vars.roomPauseCount);
-        }
+    // Reset pause buffers text to 0 when going to the main menu
+    if (current.igt == 0 && old.igt > 0) {
+        var componentPauseBuffers = vars.updateTextComponent("Pause Buffer Count");
+        componentPauseBuffers.Text2 = string.Format("Total: {0}", 0);
     }
 
     // ------------------------------------ SRT text variables ------------------------------------
@@ -527,18 +431,37 @@ onStart
 
 start
 {
-    // Start the timer after the Main Game's FMV is skipped
-    if (settings["MainGameSplits"] && current.room == 256 && old.room == 288 && vars.characters[current.character] == "Leon")
+    if (settings["Segmented"]) 
     {
-        vars.gameMode = vars.gameModes["MG"];
-        return true;
-    }
+        // Start the timer when you load any Main Game save (except the very first room) if Seg is checked
+        if (settings["MainGameSplits"] && current.room != 288 && current.room != 256 && old.room == 288 && vars.characters[current.character] == "Leon")
+        {
+            vars.gameMode = vars.gameModes["MG"];
+            return true;
+        }
 
-    // Start the timer after the Separate Ways map is skipped
-    if (settings["SeparateWaysSplits"] && current.menuType == 0 && old.menuType == 2 && vars.characters[current.character] == "Ada" && current.room == 1280 && current.da == 3500)
+        // Start the timer when you load any Separate Ways save (except the very first room)  if Seg is checked
+        if (settings["SeparateWaysSplits"] && vars.characters[current.character] == "Ada" && current.room != 288 && current.room != 1280 && old.room == 288)
+        {
+            vars.gameMode = vars.gameModes["SW"];
+            return true;
+        }
+    }
+    else 
     {
-        vars.gameMode = vars.gameModes["SW"];
-        return true;
+        // Start the timer after the Main Game's FMV is skipped if Seg isn't checked
+        if (settings["MainGameSplits"] && current.room == 256 && old.room == 288 && vars.characters[current.character] == "Leon")
+        {
+            vars.gameMode = vars.gameModes["MG"];
+            return true;
+        }
+
+        // Start the timer after the Separate Ways map is skipped if Seg isn't checked
+        if (settings["SeparateWaysSplits"] && current.menuType == 0 && old.menuType == 2 && vars.characters[current.character] == "Ada" && current.room == 1280 && current.da == 3500)
+        {
+            vars.gameMode = vars.gameModes["SW"];
+            return true;
+        }
     }
 
     // Start the timer after the Assignment Ada text is skipped
