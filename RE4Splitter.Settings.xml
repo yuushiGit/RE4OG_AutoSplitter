@@ -208,16 +208,17 @@
 		</Setting>
 	</Setting>
 	<Setting Id="DoorSplits" Label="Door Splits" State="true"/>
-	<Setting Id="Infos" Label="Information" State="false">
-		<Setting Id="ShowKills" Label="Kills" State="true"/>
-		<Setting Id="ShowMoney" Label="Money" State="true"/>
-		<Setting Id="ShowDA" Label="DA" State="false"/>
-		<Setting Id="ShowInGameTime" Label="In Game Time" State="true"/>
-		<Setting Id="ShowHealth" Label="Health" State="false"/>
-		<Setting Id="ShowHitRatio" Label="Hit Ratio" State="false"/>
-		<Setting Id="ShowDeaths" Label="Deaths" State="false"/>
-		<Setting Id="ShowInventoryCount" Label="Inventory Count" State="true"/>
-		<Setting Id="ShowInventoryTime" Label="Inventory Time" State="false"/>
-		<Setting Id="ShowPauseCount" Label="Pause Count" State="true"/>
+	<Setting Id="Infos" ToolTip="Text variables that contain useful information about the run." Label="Information" State="false">
+		<Setting Id="ShowMoney" ToolTip="Total amount of money of your character." Label="Money" State="false"/>
+		<Setting Id="ShowKills" ToolTip="Total amount of kills done in the current chapter." Label="Kills" State="false"/>
+		<Setting Id="ShowIGT" ToolTip="Current In-Game-Time." Label="IGT" State="false"/>
+		<Setting Id="ShowDA" ToolTip="Current value of the difficulty adjustment mechanic." Label="DA" State="false"/>
+		<Setting Id="ShowHealth" ToolTip="Current health value of your character." Label="Health" State="false"/>
+		<Setting Id="ShowInventoryCount" ToolTip="Total amount of times the inventory screen has been opened." Label="Inventory Count" State="false"/>
+		<Setting Id="ShowPauseCount" ToolTip="Total amount of times the options menu has been opened." Label="Pause Count" State="false"/>
+		<Setting Id="ShowInventoryTime" ToolTip="Time spent on the last inventory." Label="Inventory Time" State="false"/>
+		<Setting Id="ShowDoorloadsTime" ToolTip="Time passed so far in loading screens." Label="Doorloads Time" State="false"/>
+		<Setting Id="ShowOptionsTime" ToolTip="Time spent inside the options menu." Label="Options Time" State="false"/>
 	</Setting>
+	<Setting Id="Segmented" ToolTip="Check this if you want the timer to start automatically when loading any save (except the very first room of Main Game or Separate Ways). Useful for segmented practice." Label="Seg" State="false"/>
 </Settings>
