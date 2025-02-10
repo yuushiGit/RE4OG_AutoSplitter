@@ -496,7 +496,9 @@ split
     }
 
     // Chapter Splits
-    if (current.chapter > old.chapter && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]) && settings[string.Format("Chapter{0}", current.chapter)])
+    if (settings[string.Format("Chapter{0}", current.chapter)]
+        && current.chapter > old.chapter 
+        && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]))
     {
         return true;
     }
@@ -504,9 +506,9 @@ split
     // Key Item Splits
     String itemId = current.room.ToString() + current.item.ToString();
     if (settings[string.Format("Item{0}", itemId)] 
-    && current.item != old.item 
-    && !vars.obtainedKeyItems.Contains(itemId) 
-    && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]))
+        && current.item != old.item 
+        && !vars.obtainedKeyItems.Contains(itemId) 
+        && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]))
     {
         vars.obtainedKeyItems.Add(itemId);
         return true;
@@ -515,9 +517,9 @@ split
     // Event Splits
     String cutsceneId = current.cutscene != "" ? current.room.ToString() + current.cutscene.Substring(4) : "";
     if (settings[string.Format("Event{0}", cutsceneId)]
-    && current.cutscene != old.cutscene 
-    && !vars.playedCutscenes.Contains(cutsceneId) 
-    && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]))
+        && current.cutscene != old.cutscene 
+        && !vars.playedCutscenes.Contains(cutsceneId) 
+        && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]))
     {
         vars.playedCutscenes.Add(cutsceneId);
         return true;
@@ -525,9 +527,9 @@ split
 
     String movieId = current.movie != "" ? current.room.ToString() + current.movie.Substring(4) : "";
     if (settings[string.Format("Event{0}", movieId)]
-    && current.movie != old.movie 
-    && !vars.playedCutscenes.Contains(movieId) 
-    && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]))
+        && current.movie != old.movie 
+        && !vars.playedCutscenes.Contains(movieId) 
+        && (vars.gameMode == vars.gameModes["MG"] || vars.gameMode == vars.gameModes["SW"]))
     {
         vars.playedCutscenes.Add(movieId);
         return true;
@@ -535,16 +537,19 @@ split
 
     // Plaga Sample Splits
     if (settings[string.Format("Sample{0}", vars.obtainedPlagaSamples.Count + 1)] 
-    && current.sample > old.sample 
-    && !vars.obtainedPlagaSamples.Contains(current.sample) 
-    && vars.gameMode == vars.gameModes["AA"])
+        && current.sample > old.sample 
+        && !vars.obtainedPlagaSamples.Contains(current.sample) 
+        && vars.gameMode == vars.gameModes["AA"])
     {
         vars.obtainedPlagaSamples.Add(current.sample);
         return true;
     }
 
     // Split at the door you go through to get the Broken Butterfly (for No Merchant)
-    if ((current.room == 527 && old.room == 524) || (current.room == 518 && old.room == 527) && current.chapter == 10 && vars.gameMode == vars.gameModes["MG"] && settings["DoorSplits"])
+    if (settings["DoorSplits"]
+        && vars.gameMode == vars.gameModes["MG"]
+        && current.chapter == 10
+        && (current.room == 527 && old.room == 524) || (current.room == 518 && old.room == 527))
     {
         return true;
     }
