@@ -193,9 +193,9 @@ init
         vars.totalPauseCount = 0;                                 // Pauses done in total
         vars.totalPauseBufferCount = 0;                           // Pause buffers done in total
         vars.totalInvCount = 0;                                   // Inventories opened in total
-        vars.inventoryTime = new Stopwatch();                     // Inventory Time
-
-        // Debug
+        
+        // Timers
+        vars.inventoryTime = new Stopwatch();                     
         vars.doorLoadsTime = new Stopwatch();
         vars.optionsTime = new Stopwatch();
         vars.gameplayTime = new Stopwatch();
@@ -399,23 +399,26 @@ update
     }
 
     // Show time passed on doorloads
-    if (settings["ShowDoorloadsTime"]) {
+    if (settings["ShowDoorloadsTime"]) 
+    {
         var componentDoorLoads = vars.updateTextComponent("Door Loads");
-        componentDoorLoads.Text2 = vars.doorLoadsTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
+        componentDoorLoads.Text2 = vars.doorLoadsTime.Elapsed.ToString("mm\\:ss\\.ff");
         if (isDoorLoads) vars.doorLoadsTime.Start();
         else vars.doorLoadsTime.Stop();
     }
 
     // Show time spent on options
-    if (settings["ShowOptionsTime"]) {
+    if (settings["ShowOptionsTime"]) 
+    {
         var componentOptions = vars.updateTextComponent("Options");
-        componentOptions.Text2 = vars.optionsTime.Elapsed.ToString("hh\\:mm\\:ss\\.ff");
+        componentOptions.Text2 = vars.optionsTime.Elapsed.ToString("mm\\:ss\\.ff");
         if (isOptions) vars.optionsTime.Start();
         else vars.optionsTime.Stop();
     }
 
     // Reset pause buffers text to 0 when going to the main menu
-    if (current.igt == 0 && old.igt > 0) {
+    if (current.igt == 0 && old.igt > 0) 
+    {
         var componentPauseBuffers = vars.updateTextComponent("Pause Buffer Count");
         componentPauseBuffers.Text2 = string.Format("Total: {0}", 0);
     }
