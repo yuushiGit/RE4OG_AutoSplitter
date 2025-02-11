@@ -549,7 +549,7 @@ split
     if (settings["DoorSplits"]
         && vars.gameMode == vars.gameModes["MG"]
         && current.chapter == 10
-        && (current.room == 527 && old.room == 524) || (current.room == 518 && old.room == 527))
+        && ((current.room == 527 && old.room == 524) || (current.room == 518 && old.room == 527)))
     {
         return true;
     }
