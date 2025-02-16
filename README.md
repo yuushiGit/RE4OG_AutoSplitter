@@ -24,7 +24,7 @@ This autosplitter and load remover has the following features:
 -   Has many **SRT text variables** that provide useful information about the run and can be enabled or disabled through the settings:
     -   Once one of these ones is enabled, for the text to get created automatically on your layout, you need to go in-game and make the **value** of that variable **change** in-game. For example, for "Money", picking up a money drop or selling/buying something in the merchant will cause the text variable to get created on the layout automatically.
     -   Once created, the text variables will work indefinitely as long as they aren't deleted from your layout and you don't disable them in the settings.
-    -   **NOTE**: One of the SRT text variables is Pause Buffer Count and it is created automatically on your layout after you pause buffer in-game. This counter cannot be enabled or disabled because it is required to be shown in submissions due to the game's rules on speedrun.com
+    -   **NOTE**: One of the SRT text variables is Pause Buffer Count and it is created automatically on your layout after you pause buffer in-game. This counter cannot be enabled or disabled because it is required to be shown in submissions due to the game's rules on speedrun.com.
 
 ## For developers
 
