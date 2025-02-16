@@ -2,7 +2,7 @@
 // Developed by Yuushi with help from Sawken.
 // Special thanks to Wipe, Mysterion and Pitted for their work on previous autosplitters of this game which has served as inspiration for this one!
 // Special thanks to all the runners who helped by testing the different iterations of this .asl!
-// Version 1.0.0 (last modified February 11th, 2025).
+// Version 1.0.0 (last modified February 15th, 2025).
 
 // Version 1.1.0 (Latest)
 state("bio4", "1.1.0")
@@ -36,7 +36,6 @@ state("bio4", "1.1.0")
     short da              : 0x85F6F4;
     short health          : 0x85F714;
     short chapterKills    : 0x862BC4;
-    short totalKills      : 0x862BC8;
     uint money            : 0x85F708;
 }
 
@@ -72,7 +71,6 @@ state("bio4", "1.0.6")
     short da              : 0x85BE74;
     short health          : 0x85BE94;
     short chapterKills    : 0x85F344;
-    short totalKills      : 0x85F348;
     uint money            : 0x85BE88;
 }
 
@@ -108,7 +106,6 @@ state("bio4", "1.0.6 (Japan)")
     short da              : 0x85BE74;
     short health          : 0x85BE94;
     short chapterKills    : 0x85F344;
-    short totalKills      : 0x85F348;
     uint money            : 0x85BE88;
 }
 
